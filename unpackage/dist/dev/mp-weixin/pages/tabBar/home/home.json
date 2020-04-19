@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "uni-card": "/components/uni-card/uni-card",
+    "uni-segmented-control": "/components/uni-segmented-control/uni-segmented-control",
+    "uni-section": "/components/uni-section/uni-section"
+  }
+}

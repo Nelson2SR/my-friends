@@ -1,0 +1,42 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	    {
+            "path" : "pages/tabBar/home/home",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/tabBar/explore/explore",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/tabBar/notification/notification",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/tabBar/messages/messages",
+            "style" : {}
+        }
+		,{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}
+        ,{
+            "path" : "pages/group/group-create",
+            "style" : {
+				"navigationBarTitleText": "Your new group"
+			}
+        }
+		,{
+            "path" : "pages/group/group-view",
+            "style" : {}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	}
+}
