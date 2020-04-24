@@ -1,14 +1,43 @@
 
 .flex-item {
-		width: 100%;
-		height: 200rpx;
-		text-align: center;
-		line-height: 200rpx;
+	width: 100%;
+	height: 200rpx;
+	text-align: center;
+	line-height: 200rpx;
 }
 .flex-item-V {
-		width: 100%;
-		height: 150rpx;
-		text-align: center;
-		line-height: 150rpx;
+	width: 100%;
+	height: 150rpx;
+	text-align: center;
+	line-height: 150rpx;
+}
+.uni-form-item__title {
+    font-size: 16px;
+    line-height: 24px;
+}
+.uni-input-wrapper {
+
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+
+    padding: 8px 13px;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+            flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    background-color: #FFFFFF;
+}
+.uni-input {
+    height: 28px;
+    line-height: 28px;
+    font-size: 15px;
+    padding: 0px;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+            flex: 1;
+    background-color: #FFFFFF;
 }
 

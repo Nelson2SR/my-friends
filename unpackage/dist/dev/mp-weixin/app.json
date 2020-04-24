@@ -6,7 +6,8 @@
     "pages/tabBar/messages/messages",
     "pages/index/index",
     "pages/group/group-create",
-    "pages/group/group-view"
+    "pages/group/group-view",
+    "test/uploadFile/uploadFile"
   ],
   "subPackages": [],
   "window": {
@@ -15,5 +16,6 @@
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap46.json"
 }

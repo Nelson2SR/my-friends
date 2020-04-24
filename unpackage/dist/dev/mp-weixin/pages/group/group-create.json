@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "Your new group",
-  "usingComponents": {}
+  "usingComponents": {
+    "uni-card": "/components/uni-card/uni-card"
+  }
 }

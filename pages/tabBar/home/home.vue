@@ -5,6 +5,7 @@
 			<navigator url="/pages/group/group-create" hover-class="navigator-hover">
 				<button type="default">创建群组</button>
 			</navigator>
+			<uploadFile></uploadFile>
 		</view>
 		<view class="example-box">
 			<uni-card :is-shadow="true" title="uni-app 框架" mode="style" thumbnail="https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/shuijiao.jpg"
@@ -65,7 +66,7 @@
 		components: {
 			uniSegmentedControl,
 			uniSection,
-			uniCard
+			uniCard,
 		},
 		data() {
 			return {
@@ -99,7 +100,7 @@
 				}
 			},
 			createGroup(e) {
-				nav
+				
 			}
 		}
 	}

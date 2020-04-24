@@ -7746,9 +7746,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 4:
-/*!*********************************************************************!*\
-  !*** /Users/surong/Project/HBuilderProject/HighTogether/pages.json ***!
-  \*********************************************************************/
+/*!******************************************************************!*\
+  !*** /Users/surong/Project/HBuilderProject/MyFriends/pages.json ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -8659,9 +8659,9 @@ main();
 /***/ }),
 
 /***/ 56:
-/*!*********************************************************************************!*\
-  !*** /Users/surong/Project/HBuilderProject/HighTogether/common/graceChecker.js ***!
-  \*********************************************************************************/
+/*!******************************************************************************!*\
+  !*** /Users/surong/Project/HBuilderProject/MyFriends/common/graceChecker.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -8776,21 +8776,21 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ }),
 
 /***/ 7:
-/*!**************************************************************************************!*\
-  !*** /Users/surong/Project/HBuilderProject/HighTogether/pages.json?{"type":"style"} ***!
-  \**************************************************************************************/
+/*!***********************************************************************************!*\
+  !*** /Users/surong/Project/HBuilderProject/MyFriends/pages.json?{"type":"style"} ***!
+  \***********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabBar/home/home": { "usingComponents": { "uni-segmented-control": "/components/uni-segmented-control/uni-segmented-control", "uni-section": "/components/uni-section/uni-section", "uni-card": "/components/uni-card/uni-card" }, "usingAutoImportComponents": { "uni-card": "/components/uni-card/uni-card", "uni-segmented-control": "/components/uni-segmented-control/uni-segmented-control" } }, "pages/tabBar/explore/explore": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/tabBar/notification/notification": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/tabBar/messages/messages": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/index/index": { "navigationBarTitleText": "uni-app", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/group/group-create": { "navigationBarTitleText": "Your new group", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/group/group-view": { "usingComponents": {}, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabBar/home/home": {}, "pages/tabBar/explore/explore": {}, "pages/tabBar/notification/notification": {}, "pages/tabBar/messages/messages": {}, "pages/index/index": { "navigationBarTitleText": "uni-app" }, "pages/group/group-create": { "navigationBarTitleText": "Your new group" }, "pages/group/group-view": {}, "test/uploadFile/uploadFile": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 
 /***/ 8:
-/*!*************************************************************************************!*\
-  !*** /Users/surong/Project/HBuilderProject/HighTogether/pages.json?{"type":"stat"} ***!
-  \*************************************************************************************/
+/*!**********************************************************************************!*\
+  !*** /Users/surong/Project/HBuilderProject/MyFriends/pages.json?{"type":"stat"} ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
