@@ -70,6 +70,7 @@
 		},
 		data() {
 			return {
+				myGroups: [],
 				background: ['color1', 'color2', 'color3'],
 				indicatorDots: true,
 				autoplay: true,

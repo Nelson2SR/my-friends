@@ -7,23 +7,23 @@
 						<progress :percent="percent" stroke-width="10"></progress>
 					</view>
 					<view>
-						<button type="primary" :loading="loading" :disabled="disabled" @click="upload">选择照片</button>
+						<button type="primary" :loading="loading" :disabled="disabled" @click="upload">{{pickPic}}</button>
 					</view>
 				</view>
 				<view class="flex-item uni-form-item uni-column">
 					<view class="title"><text class="uni-form-item__title">Group Name</text></view>
 					<view class="uni-input-wrapper">
-						<input class="uni-input group-name" name="group-name" focus placeholder="" />
+						<input class="uni-input group-name" name="name" focus placeholder="" />
 					</view>
 				</view>
 				<view class="flex-item uni-form-item uni-column">
 					<view class="title"><text class="uni-form-item__title">Group Description</text></view>
 					<view class="uni-input-wrapper">
-						<input class="uni-input group-description" name="group-description" focus placeholder="" />
+						<input class="uni-input group-description" name="description" focus placeholder="" />
 					</view>
 				</view>
 			</view>
-			
+
 			<view class="group-visibility uni-flex uni-row">
 				<view class="title">
 					<text class="uni-form-item__title">Group visibility</text>
@@ -43,7 +43,7 @@
 					</uni-card>
 				</view>
 			</view>
-			
+
 			<view class="group-join-setting uni-flex uni-row">
 				<view class="title">
 					<text class="uni-form-item__title">Join Preference</text>
@@ -59,7 +59,7 @@
 					</uni-card>
 				</view>
 			</view>
-			
+
 			<view class="uni-row">
 				<button class="uni-row" form-type="submit">保存</button>
 			</view>
@@ -72,15 +72,15 @@
 	var graceChecker = require("../../common/graceChecker.js");
 	var _self;
 	var tempFilePaths;
-	var groupVisibility;
+	var visibility;
 	var joinMethod;
 	export default {
-		components:{
+		components: {
 			uniCard
 		},
 		data() {
 			return {
-
+				"pickPic": "选择照片"
 			}
 		},
 		onLoad: function(options) {
@@ -91,13 +91,13 @@
 
 				//定义表单规则
 				const rule = [{
-						name: "group-name",
+						name: "name",
 						checkType: "string",
 						checkRule: "1,10",
 						errorMsg: "姓名应为1-10个字符"
 					},
 					{
-						name: "group-description",
+						name: "description",
 						checkType: "string",
 						checkRule: "1,50",
 						errorMsg: "请控制为1-50个字符"
@@ -113,7 +113,8 @@
 					 joinMethod:String,
 					 location:String,
 					 pic:String,
-					 type:String
+					 type:String,
+					 owner:UUID
 				 }
 				 */
 
@@ -122,7 +123,7 @@
 				console.log('form data:' + JSON.stringify(formData))
 				const checkRes = graceChecker.check(formData, rule);
 
-				if (checkRes && groupVisibility !== undefined && joinMethod !== undefined ) {
+				if (checkRes && visibility !== undefined && joinMethod !== undefined) {
 					uni.showToast({
 						title: "验证通过!",
 						icon: "none"
@@ -131,8 +132,9 @@
 					let data = e.detail.value;
 					data.createdAt = new Date();
 					data.createdBy = 1;
-					data.groupVisibility = groupVisibility;
+					data.visibility = visibility;
 					data.joinMethod = joinMethod;
+					data.owner = 'userId'
 					console.log('create group for data: ' + JSON.stringify(data));
 
 					uniCloud.uploadFile({
@@ -153,8 +155,8 @@
 								})
 								.then(res => {
 									console.log("success with" + JSON.stringify(res));
-									uni.navigateTo({
-										url: 'group-view'
+									uni.redirectTo({
+										url: 'group-view?id=' + res.result.id
 									});
 								});
 
@@ -186,8 +188,8 @@
 				});
 			},
 			clickVisibilityCard(e) {
-				groupVisibility = e;
-				
+				visibility = e;
+
 				uni.showToast({
 					title: '点击卡片',
 					icon: 'none'
@@ -195,7 +197,7 @@
 			},
 			clickJoinCard(e) {
 				joinMethod = e;
-				
+
 				uni.showToast({
 					title: '点击卡片',
 					icon: 'none'
@@ -219,28 +221,28 @@
 		text-align: center;
 		line-height: 150rpx;
 	}
-	
+
 	.uni-form-item__title {
-	    font-size: 16px;
-	    line-height: 24px;
+		font-size: 16px;
+		line-height: 24px;
 	}
-	
+
 	.uni-input-wrapper {
-	    /* #ifndef APP-NVUE */
-	    display: flex;
-	    /* #endif */
-	    padding: 8px 13px;
-	    flex-direction: row;
-	    flex-wrap: nowrap;
-	    background-color: #FFFFFF;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		padding: 8px 13px;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		background-color: #FFFFFF;
 	}
-	
+
 	.uni-input {
-	    height: 28px;
-	    line-height: 28px;
-	    font-size: 15px;
-	    padding: 0px;
-	    flex: 1;
-	    background-color: #FFFFFF;
+		height: 28px;
+		line-height: 28px;
+		font-size: 15px;
+		padding: 0px;
+		flex: 1;
+		background-color: #FFFFFF;
 	}
 </style>

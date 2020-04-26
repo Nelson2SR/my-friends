@@ -2,36 +2,36 @@
 	<view class="group-view">
 		<view class="uni-flex uni-row">
 			<view class="flex-item banner">
-				<image src="../../static/logo.png" mode=""></image>
+				<image :src="item.imgId" mode=""></image>
 			</view>
 			<view class="flex-item group-info">
-				<view class="group-name">王者荣耀群</view>
-				<view class="group-detail">
-					<view class="group-size">1</view>
-					<view class="group-access">Public group</view>
-					<view class="group-category">Badminton</view>
+				<view class="flex-item group-name">{{item.name}}</view>
+				<view class="flex-item group-detail">
+					<view class="flex-item group-size">1</view>
+					<view class="flex-item group-access">{{item.visibility}}</view>
+					<view class="flex-item group-category">Interest</view>
 				</view>
-				<view class="group-action">
-					<button type="default">Invite</button>
-					<button type="default">Share</button>
+				<view class="flex-item group-action">
+					<button type="flex-item default">Invite</button>
+					<button type="flex-item default">Share</button>
 				</view>
 			</view>
 			<view class="flex-item group-admins">
-				<!-- list of admin avatar -->
+				<text>No admins yet</text>
 			</view>
 			<view class="flex-item group-members">
-				<!-- list of member avatar -->
+				<text>No members yet</text>
 			</view>
 			<view class="flex-item group-location">
 				<text>Singapore</text>
 			</view>
 			<view class="flex-item group-description">
-				<text>加入我们</text>
+				<text>{{item.description}}</text>
 			</view>
 			<view class="flex-item group-join-method">
-				<text>需要admin同意</text>
+				<text>{{item.joinMethod}}</text>
 			</view>
-			<view class="flex-item group-description">
+			<view class="flex-item group-activeness">
 				<text>Last active 41 minutes ago</text>
 			</view>
 		</view>
@@ -39,6 +39,32 @@
 </template>
 
 <script>
+	export default {
+		components:{
+			
+		},
+		data() {
+			return {
+				item: {}
+			}
+		},
+		onLoad: function(options) {
+			console.log(options.id);
+		    uniCloud.callFunction({
+		    		name: 'group-get-by-docId',
+		    		data: {
+						id: options.id
+					}
+		    	})
+		    	.then(res => {
+		    		console.log("success with" + JSON.stringify(res));
+		    		this.item = res.result.data[0];
+		    	});
+		},
+		methods: {
+			
+		}
+	}
 </script>
 
 <style>

@@ -128,8 +128,10 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!/Users/surong/Project/HBuilderProject/MyFriends/pages/group/group-view.vue?vue&type=script&lang=js& ***!
   \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -169,7 +171,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
+var _default =
+{
+  components: {},
+
+
+  data: function data() {
+    return {
+      item: {} };
+
+  },
+  onLoad: function onLoad(options) {var _this = this;
+    console.log(options.id);
+    uniCloud.callFunction({
+      name: 'group-get-by-docId',
+      data: {
+        id: options.id } }).
+
+
+    then(function (res) {
+      console.log("success with" + JSON.stringify(res));
+      _this.item = res.result.data[0];
+    });
+  },
+  methods: {} };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 47)["default"]))
 
 /***/ }),
 

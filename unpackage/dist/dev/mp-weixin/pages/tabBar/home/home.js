@@ -219,6 +219,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   data: function data() {
     return {
+      myGroups: [],
       background: ['color1', 'color2', 'color3'],
       indicatorDots: true,
       autoplay: true,

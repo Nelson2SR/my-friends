@@ -209,15 +209,15 @@ __webpack_require__.r(__webpack_exports__);
 var graceChecker = __webpack_require__(/*! ../../common/graceChecker.js */ 56);
 var _self;
 var tempFilePaths;
-var groupVisibility;
+var visibility;
 var joinMethod;var _default =
 {
   components: {
     uniCard: uniCard },
 
   data: function data() {
-    return {};
-
+    return {
+      "pickPic": "选择照片" };
 
   },
   onLoad: function onLoad(options) {
@@ -228,13 +228,13 @@ var joinMethod;var _default =
 
       //定义表单规则
       var rule = [{
-        name: "group-name",
+        name: "name",
         checkType: "string",
         checkRule: "1,10",
         errorMsg: "姓名应为1-10个字符" },
 
       {
-        name: "group-description",
+        name: "description",
         checkType: "string",
         checkRule: "1,50",
         errorMsg: "请控制为1-50个字符" }];
@@ -250,7 +250,8 @@ var joinMethod;var _default =
                                     	 joinMethod:String,
                                     	 location:String,
                                     	 pic:String,
-                                    	 type:String
+                                    	 type:String,
+                                    	 owner:UUID
                                      }
                                      */
 
@@ -259,7 +260,7 @@ var joinMethod;var _default =
       console.log('form data:' + JSON.stringify(formData));
       var checkRes = graceChecker.check(formData, rule);
 
-      if (checkRes && groupVisibility !== undefined && joinMethod !== undefined) {
+      if (checkRes && visibility !== undefined && joinMethod !== undefined) {
         uni.showToast({
           title: "验证通过!",
           icon: "none" });
@@ -268,8 +269,9 @@ var joinMethod;var _default =
         var data = e.detail.value;
         data.createdAt = new Date();
         data.createdBy = 1;
-        data.groupVisibility = groupVisibility;
+        data.visibility = visibility;
         data.joinMethod = joinMethod;
+        data.owner = 'userId';
         console.log('create group for data: ' + JSON.stringify(data));
 
         uniCloud.uploadFile({
@@ -290,8 +292,8 @@ var joinMethod;var _default =
 
             then(function (res) {
               console.log("success with" + JSON.stringify(res));
-              uni.navigateTo({
-                url: 'group-view' });
+              uni.redirectTo({
+                url: 'group-view?id=' + res.result.id });
 
             });
 
@@ -323,7 +325,7 @@ var joinMethod;var _default =
 
     },
     clickVisibilityCard: function clickVisibilityCard(e) {
-      groupVisibility = e;
+      visibility = e;
 
       uni.showToast({
         title: '点击卡片',
