@@ -8,53 +8,12 @@
 			<uploadFile></uploadFile>
 		</view>
 		<view class="example-box">
-			<uni-card :is-shadow="true" title="uni-app 框架" mode="style" thumbnail="https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/shuijiao.jpg"
-			 extra="SR 2019-05-20 12:32:19" note="true" @click="clickCard">
-				<text class="content-box-text">王者荣耀爱好群</text>
-				<block slot="footer">
-					<view class="footer-box">
-						<view class="" @click.stop="footerClick('喜欢')"><text class="footer-box__item"> 喜欢</text></view>
-						<view class="" @click.stop="footerClick('评论')"><text class="footer-box__item"> 评论</text></view>
-						<view class="" @click.stop="footerClick('分享')"><text class="footer-box__item"> 分享</text></view>
-					</view>
-				</block>
-			</uni-card>
-		</view>
-		<view class="uni-margin-wrap">
-			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
-				<swiper-item>
-					<image src="../../../static/logo.png"></image>
-					<view class="swiper-item uni-bg-red">A</view>
-				</swiper-item>
-				<swiper-item>
-					<image src="../../../static/logo.png"></image>
-					<view class="swiper-item uni-bg-green">B</view>
-				</swiper-item>
-				<swiper-item>
-					<image src="../../../static/logo.png"></image>
-					<view class="swiper-item uni-bg-blue">C</view>
-				</swiper-item>
-			</swiper>
-		</view>
-
-		<view class="container calendar">
-			<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" :style-type="styleType"
-			 :active-color="activeColor"></uni-segmented-control>
-			<view class="content">
-				<view v-if="current === 0">
-					<text class="content-text">选项卡1的内容</text>
-				</view>
-				<view v-if="current === 1">
-					选项卡2的内容
-				</view>
-				<view v-if="current === 2">
-					选项卡3的内容
-				</view>
-				<view v-if="current === 3">
-					选项卡4的内容
-				</view>
+			<view class="group-list" v-for="(group, key) in myGroups" :key="key">
+				<cu-card :item="group"></cu-card>
 			</view>
 		</view>
+		
+		<cu-bar></cu-bar>
 	</view>
 </template>
 
@@ -101,8 +60,22 @@
 				}
 			},
 			createGroup(e) {
-				
+
 			}
+		},
+		onLoad: function() {
+			const owner = 'userId';
+			uniCloud.callFunction({
+					name: 'group-get-by-ownerId',
+					data: {
+						owner: owner
+					}
+				})
+				.then(res => {
+					console.log("success with" + JSON.stringify(res));
+					this.myGroups = res.result.data;
+					console.log("my groups:" + JSON.stringify(this.myGroups));
+				});
 		}
 	}
 </script>

@@ -108,7 +108,7 @@
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"components/uni-card/uni-card":"components/uni-card/uni-card","components/uni-section/uni-section":"components/uni-section/uni-section","components/uni-segmented-control/uni-segmented-control":"components/uni-segmented-control/uni-segmented-control"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"colorui/components/cu-bar":"colorui/components/cu-bar","colorui/components/cu-card":"colorui/components/cu-card","colorui/components/cu-custom":"colorui/components/cu-custom","components/uni-card/uni-card":"components/uni-card/uni-card","components/uni-section/uni-section":"components/uni-section/uni-section","components/uni-segmented-control/uni-segmented-control":"components/uni-segmented-control/uni-segmented-control"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

@@ -6,6 +6,6 @@ exports.main = async (event, context) => {
 	const collection = db.collection('group')
 	const res = await collection.where({
 		owner: event.owner
-	})
+	}).get()
 	return res
 };
