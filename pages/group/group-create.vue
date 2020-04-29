@@ -1,66 +1,86 @@
 <template>
 	<view class="uni-flex uni-row">
-		<form @submit="createGroup" class="flex-item">
-			<view class="group-metadata uni-flex uni-row">
-				<view class="flex-item">
-					<view>
-						<progress :percent="percent" stroke-width="10"></progress>
+		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
+			<block slot="backText">返回</block>
+			<block slot="content">新群</block>
+		</cu-custom>
+		<form @submit="createGroup" class="">
+			<view class="cu-form-group">
+				<input placeholder="群名" name="name"></input>
+			</view>
+			<view class="cu-form-group margin-top">
+				<textarea maxlength="-1" :disabled="modalName!=null" @input="onDescriptionInput" placeholder="群描述" name="description"></textarea>
+			</view>
+			<!-- #ifndef H5 || APP-PLUS || MP-ALIPAY -->
+			<view class="cu-form-group margin-top">
+				<view class="title">地址选择</view>
+				<picker mode="region" @change="RegionChange" :value="region">
+					<view class="picker">
+						{{region[0]}}，{{region[1]}}，{{region[2]}}
 					</view>
-					<view>
-						<button type="primary" :loading="loading" :disabled="disabled" @click="upload">{{pickPic}}</button>
-					</view>
+				</picker>
+			</view>
+			<!-- #endif -->
+			
+			<view class="cu-bar bg-white">
+				<view class="action">
+					图片上传
 				</view>
-				<view class="flex-item uni-form-item uni-column">
-					<view class="title"><text class="uni-form-item__title">Group Name</text></view>
-					<view class="uni-input-wrapper">
-						<input class="uni-input group-name" name="name" focus placeholder="" />
-					</view>
+				<view class="action">
+					{{imgList.length}}/4
 				</view>
-				<view class="flex-item uni-form-item uni-column">
-					<view class="title"><text class="uni-form-item__title">Group Description</text></view>
-					<view class="uni-input-wrapper">
-						<input class="uni-input group-description" name="description" focus placeholder="" />
+			</view>
+			<view class="cu-form-group">
+				<view class="grid col-4 grid-square flex-sub">
+					<view class="bg-img" v-for="(item,index) in imgList" :key="index" @tap="ViewImage" :data-url="imgList[index]">
+					 <image :src="imgList[index]" mode="aspectFill"></image>
+						<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
+							<text class='cuIcon-close'></text>
+						</view>
+					</view>
+					<view class="solids" @tap="ChooseImage" v-if="imgList.length<4">
+						<text class='cuIcon-cameraadd'></text>
 					</view>
 				</view>
 			</view>
-
-			<view class="group-visibility uni-flex uni-row">
-				<view class="title">
-					<text class="uni-form-item__title">Group visibility</text>
-				</view>
-				<view class="example-box">
-					<uni-card :is-shadow="true" mode="style" @click="clickVisibilityCard('public')">
-						<text class="content-box-text">Public Group</text>
-						<text class="content-box-text">The group can be searched and its content can be seen by public.</text>
-					</uni-card>
-					<uni-card :is-shadow="true" mode="style" @click="clickVisibilityCard('closed')">
-						<text class="content-box-text">Closed Group</text>
-						<text class="content-box-text">The group can be searched but only members can view its content.</text>
-					</uni-card>
-					<uni-card :is-shadow="true" mode="style" @click="clickVisibilityCard('hidden')">
-						<text class="content-box-text">Hidden Group</text>
-						<text class="content-box-text">The group cannot be searched and its content can only be seen by members.</text>
-					</uni-card>
+			
+			<view class="cu-bar bg-white margin-top solid-bottom">
+				<view class="action">
+					<text class="cuIcon-title text-orange"></text> 群隐私
 				</view>
 			</view>
-
-			<view class="group-join-setting uni-flex uni-row">
-				<view class="title">
-					<text class="uni-form-item__title">Join Preference</text>
+			<radio-group class="block" @change="onVisibilityChange">
+				<view class="cu-form-group">
+					<view class="title">Public</view>
+					<radio :class="visibility=='public'?'checked':''" :checked="visibility=='public'?true:false" value="public"></radio>
 				</view>
-				<view class="example-box">
-					<uni-card :is-shadow="true" mode="style" @click="clickJoinCard('freeJoin')">
-						<text class="content-box-text">Anyone can join</text>
-						<text class="content-box-text">Anyone can join this group.</text>
-					</uni-card>
-					<uni-card :is-shadow="true" mode="style" @click="clickJoinCard('requireApproval')">
-						<text class="content-box-text">Request to join</text>
-						<text class="content-box-text">Joining the group requires admin approval.</text>
-					</uni-card>
+				<view class="cu-form-group">
+					<view class="title">Closed</view>
+					<radio :class="visibility=='closed'?'checked':''" :checked="visibility=='closed'?true:false" value="closed"></radio>
+				</view>
+				<view class="cu-form-group">
+					<view class="title">Hidden</view>
+					<radio :class="visibility=='hidden'?'checked':''" :checked="visibility=='hidden'?true:false" value="hidden"></radio>
+				</view>
+			</radio-group>
+			
+			<view class="cu-bar bg-white margin-top solid-bottom">
+				<view class="action">
+					<text class="cuIcon-title text-orange"></text> 加入方式
 				</view>
 			</view>
+			<radio-group class="block" @change="onJoinMethodChange">
+				<view class="cu-form-group">
+					<view class="title">Free Join</view>
+					<radio :class="joinMethod=='freeJoin'?'checked':''" :checked="joinMethod=='freeJoin'?true:false" value="freeJoin"></radio>
+				</view>
+				<view class="cu-form-group">
+					<view class="title">Require Approval</view>
+					<radio :class="joinMethod=='requireApproval'?'checked':''" :checked="joinMethod=='requireApproval'?true:false" value="requireApproval"></radio>
+				</view>
+			</radio-group>
 
-			<view class="uni-row">
+			<view class="uni-row margin-top">
 				<button class="uni-row" form-type="submit">保存</button>
 			</view>
 		</form>
@@ -68,23 +88,35 @@
 </template>
 
 <script>
-	import uniCard from '@/components/uni-card/uni-card.vue'
 	var graceChecker = require("../../common/graceChecker.js");
 	var _self;
 	var tempFilePaths;
-	var visibility;
-	var joinMethod;
 	export default {
 		components: {
-			uniCard
+			
+		},
+		props: {
+			showForm: {
+				type: Boolean,
+				default: true
+			},
+			showLoading: {
+				type: Boolean,
+				default: false
+			}
 		},
 		data() {
 			return {
-				"pickPic": "选择照片"
+				"pickPic": "选择照片",
+				imgList: [],
+				region: ['广东省', '广州市', '海珠区'],
+				joinMethod: "",
+				visibility: "",
+				description: ""
 			}
 		},
 		onLoad: function(options) {
-			console.log(options.id);
+			console.log("landed on create-group page")
 		},
 		methods: {
 			createGroup: function(e) {
@@ -114,7 +146,8 @@
 					 location:String,
 					 pic:String,
 					 type:String,
-					 owner:UUID
+					 owner:UUID,
+					 region:String
 				 }
 				 */
 
@@ -123,22 +156,26 @@
 				console.log('form data:' + JSON.stringify(formData))
 				const checkRes = graceChecker.check(formData, rule);
 
-				if (checkRes && visibility !== undefined && joinMethod !== undefined) {
+				if (checkRes && this.visibility !== undefined && this.joinMethod !== undefined) {
 					uni.showToast({
 						title: "验证通过!",
 						icon: "none"
 					});
-
+					this.showForm = false;
+					this.showLoading = true;
+					
 					let data = e.detail.value;
 					data.createdAt = new Date();
 					data.createdBy = 1;
-					data.visibility = visibility;
-					data.joinMethod = joinMethod;
-					data.owner = 'userId'
+					data.visibility = this.visibility;
+					data.joinMethod = this.joinMethod;
+					data.owner = 'userId'; // TODO, add wechat user id
+					data.type = '游戏';
+					data.region = this.region;
 					console.log('create group for data: ' + JSON.stringify(data));
 
 					uniCloud.uploadFile({
-						filePath: tempFilePaths[0],
+						filePath: this.imgList[0],
 						onUploadProgress: function(progressEvent) {
 							// console.log(progressEvent);
 							var percentCompleted = Math.round(
@@ -202,20 +239,69 @@
 					title: '点击卡片',
 					icon: 'none'
 				})
-			}
+			},
+			ChooseImage() {
+				uni.chooseImage({
+					count: 4, //默认9
+					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sourceType: ['album'], //从相册选择
+					success: (res) => {
+						if (this.imgList.length != 0) {
+							this.imgList = this.imgList.concat(res.tempFilePaths)
+						} else {
+							this.imgList = res.tempFilePaths
+						}
+					}
+				});
+			},
+			ViewImage(e) {
+				uni.previewImage({
+					urls: this.imgList,
+					current: e.currentTarget.dataset.url
+				});
+			},
+			DelImg(e) {
+				uni.showModal({
+					title: '召唤师',
+					content: '确定要删除这段回忆吗？',
+					cancelText: '再看看',
+					confirmText: '再见',
+					success: res => {
+						if (res.confirm) {
+							this.imgList.splice(e.currentTarget.dataset.index, 1)
+						}
+					}
+				})
+			},
+			RegionChange(e) {
+				this.region = e.detail.value
+			},
+			onVisibilityChange(e) {
+				this.visibility = e.detail.value
+			},
+			onJoinMethodChange(e) {
+				this.joinMethod = e.detail.value
+			},
+			onDescriptionInput(e) {
+				this.description = e.detail.value
+			},
 		}
 	}
 </script>
 
 <style>
-	.flex-item {
+	.cu-form-group .title {
+		min-width: calc(4em + 15px);
+	}
+	
+	. {
 		width: 100%;
 		height: 200rpx;
 		text-align: center;
 		line-height: 200rpx;
 	}
 
-	.flex-item-V {
+	.-V {
 		width: 100%;
 		height: 150rpx;
 		text-align: center;

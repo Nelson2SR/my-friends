@@ -38,7 +38,7 @@
         }
     ],
 	"globalStyle": {
-		// "navigationStyle":"custom", //取消系统导航栏
+		"navigationStyle":"custom", //取消系统导航栏
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",

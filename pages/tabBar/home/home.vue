@@ -2,9 +2,6 @@
 	<view class="container groups">
 		<view class="group-title">
 			<text class="title">Your groups</text>
-			<navigator url="/pages/group/group-create" hover-class="navigator-hover">
-				<button type="default">创建群组</button>
-			</navigator>
 			<uploadFile></uploadFile>
 		</view>
 		<view class="example-box">
@@ -18,14 +15,9 @@
 </template>
 
 <script>
-	import uniSegmentedControl from "@/components/uni-segmented-control/uni-segmented-control.vue"
-	import uniSection from '@/components/uni-section/uni-section.vue'
-	import uniCard from '@/components/uni-card/uni-card.vue'
 	export default {
 		components: {
-			uniSegmentedControl,
-			uniSection,
-			uniCard,
+
 		},
 		data() {
 			return {
@@ -72,9 +64,7 @@
 					}
 				})
 				.then(res => {
-					console.log("success with" + JSON.stringify(res));
 					this.myGroups = res.result.data;
-					console.log("my groups:" + JSON.stringify(this.myGroups));
 				});
 		}
 	}

@@ -1,9 +1,9 @@
 <template>
-	<view class="cu-card case" :class="isCard?'no-card':''">
+	<view class="cu-card case" :class="isCard?'no-card':''" @click="onClick(item)">
 		<view class="cu-item shadow">
 			<view class="image">
 				<image :src="item.imgId" mode="widthFix"></image>
-				<view class="cu-tag bg-blue" name="tag">游戏</view>
+				<view class="cu-tag bg-blue" name="type">{{ item.type }}</view>
 				<view class="cu-bar bg-shadeBottom"> <text class="text-cut" name="description">{{ item.description }}</text></view>
 			</view>
 			<view class="cu-list menu-avatar">
@@ -37,6 +37,14 @@
 			item: {
 				type: Object,
 				default: {}
+			}
+		},
+		methods: {
+			onClick(e) {
+				console.log("The card value:" + e)
+				uni.navigateTo({
+					url: "/pages/group/group-view?id=" + e._id
+				})
 			}
 		},
 		onLoad: function() {

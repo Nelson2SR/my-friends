@@ -7,8 +7,8 @@
 			<view class="cuIcon-similar"></view> 分类
 		</view>
 		<view class="action text-gray add-action">
-			<button class="cu-btn cuIcon-add bg-green shadow"></button>
-			发布
+			<button class="cu-btn cuIcon-add bg-green shadow" @click="onCreateGroup"></button>
+			创建
 		</view>
 		<view class="action text-gray">
 			<view class="cuIcon-cart">
@@ -26,6 +26,20 @@
 </template>
 
 <script>
+	export default {
+		data() {
+			return {
+				
+			}
+		},
+		methods:{
+			onCreateGroup() {
+				uni.navigateTo({
+					url: "/pages/group/group-create"
+				})
+			}
+		}
+	}
 </script>
 
 <style>

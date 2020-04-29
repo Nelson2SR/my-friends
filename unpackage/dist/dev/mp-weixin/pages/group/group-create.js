@@ -93,11 +93,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
-var components = {
-  "uni-card": function() {
-    return __webpack_require__.e(/*! import() | components/uni-card/uni-card */ "components/uni-card/uni-card").then(__webpack_require__.bind(null, /*! @/components/uni-card/uni-card.vue */ 78))
-  }
-}
+var components
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -135,93 +131,125 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni, uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniCard = function uniCard() {__webpack_require__.e(/*! require.ensure | components/uni-card/uni-card */ "components/uni-card/uni-card").then((function () {return resolve(__webpack_require__(/*! @/components/uni-card/uni-card.vue */ 78));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* WEBPACK VAR INJECTION */(function(uni, uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var graceChecker = __webpack_require__(/*! ../../common/graceChecker.js */ 56);
 var _self;
-var tempFilePaths;
-var visibility;
-var joinMethod;var _default =
+var tempFilePaths;var _default =
 {
-  components: {
-    uniCard: uniCard },
+  components: {},
+
+
+  props: {
+    showForm: {
+      type: Boolean,
+      default: true },
+
+    showLoading: {
+      type: Boolean,
+      default: false } },
+
 
   data: function data() {
     return {
-      "pickPic": "选择照片" };
+      "pickPic": "选择照片",
+      imgList: [],
+      region: ['广东省', '广州市', '海珠区'],
+      joinMethod: "",
+      visibility: "",
+      description: "" };
 
   },
   onLoad: function onLoad(options) {
-    console.log(options.id);
+    console.log("landed on create-group page");
   },
   methods: {
     createGroup: function createGroup(e) {
@@ -251,7 +279,8 @@ var joinMethod;var _default =
                                     	 location:String,
                                     	 pic:String,
                                     	 type:String,
-                                    	 owner:UUID
+                                    	 owner:UUID,
+                                    	 region:String
                                      }
                                      */
 
@@ -260,22 +289,26 @@ var joinMethod;var _default =
       console.log('form data:' + JSON.stringify(formData));
       var checkRes = graceChecker.check(formData, rule);
 
-      if (checkRes && visibility !== undefined && joinMethod !== undefined) {
+      if (checkRes && this.visibility !== undefined && this.joinMethod !== undefined) {
         uni.showToast({
           title: "验证通过!",
           icon: "none" });
 
+        this.showForm = false;
+        this.showLoading = true;
 
         var data = e.detail.value;
         data.createdAt = new Date();
         data.createdBy = 1;
-        data.visibility = visibility;
-        data.joinMethod = joinMethod;
-        data.owner = 'userId';
+        data.visibility = this.visibility;
+        data.joinMethod = this.joinMethod;
+        data.owner = 'userId'; // TODO, add wechat user id
+        data.type = '游戏';
+        data.region = this.region;
         console.log('create group for data: ' + JSON.stringify(data));
 
         uniCloud.uploadFile({
-          filePath: tempFilePaths[0],
+          filePath: this.imgList[0],
           onUploadProgress: function onUploadProgress(progressEvent) {
             // console.log(progressEvent);
             var percentCompleted = Math.round(
@@ -339,6 +372,51 @@ var joinMethod;var _default =
         title: '点击卡片',
         icon: 'none' });
 
+    },
+    ChooseImage: function ChooseImage() {var _this = this;
+      uni.chooseImage({
+        count: 4, //默认9
+        sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album'], //从相册选择
+        success: function success(res) {
+          if (_this.imgList.length != 0) {
+            _this.imgList = _this.imgList.concat(res.tempFilePaths);
+          } else {
+            _this.imgList = res.tempFilePaths;
+          }
+        } });
+
+    },
+    ViewImage: function ViewImage(e) {
+      uni.previewImage({
+        urls: this.imgList,
+        current: e.currentTarget.dataset.url });
+
+    },
+    DelImg: function DelImg(e) {var _this2 = this;
+      uni.showModal({
+        title: '召唤师',
+        content: '确定要删除这段回忆吗？',
+        cancelText: '再看看',
+        confirmText: '再见',
+        success: function success(res) {
+          if (res.confirm) {
+            _this2.imgList.splice(e.currentTarget.dataset.index, 1);
+          }
+        } });
+
+    },
+    RegionChange: function RegionChange(e) {
+      this.region = e.detail.value;
+    },
+    onVisibilityChange: function onVisibilityChange(e) {
+      this.visibility = e.detail.value;
+    },
+    onJoinMethodChange: function onJoinMethodChange(e) {
+      this.joinMethod = e.detail.value;
+    },
+    onDescriptionInput: function onDescriptionInput(e) {
+      this.description = e.detail.value;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 21)["default"]))
 

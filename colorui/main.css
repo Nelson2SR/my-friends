@@ -2813,6 +2813,10 @@ scroll-view.cu-steps .cu-item {
 	flex-basis: 80%;
 }
 
+.basis-max {
+	flex-basis: 100%;
+}
+
 .flex-sub {
 	flex: 1;
 }

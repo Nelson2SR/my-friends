@@ -8783,7 +8783,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabBar/home/home": {}, "pages/tabBar/explore/explore": {}, "pages/tabBar/notification/notification": {}, "pages/tabBar/messages/messages": {}, "pages/index/index": { "navigationBarTitleText": "uni-app" }, "pages/group/group-create": { "navigationBarTitleText": "Your new group" }, "pages/group/group-view": {}, "test/uploadFile/uploadFile": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabBar/home/home": {}, "pages/tabBar/explore/explore": {}, "pages/tabBar/notification/notification": {}, "pages/tabBar/messages/messages": {}, "pages/index/index": { "navigationBarTitleText": "uni-app" }, "pages/group/group-create": { "navigationBarTitleText": "Your new group" }, "pages/group/group-view": {}, "test/uploadFile/uploadFile": {} }, "globalStyle": { "navigationStyle": "custom", "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 

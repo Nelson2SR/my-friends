@@ -1,11 +1,14 @@
 
-.flex-item {
+.cu-form-group .title {
+	min-width: calc(4em + 15px);
+}
+. {
 	width: 100%;
 	height: 200rpx;
 	text-align: center;
 	line-height: 200rpx;
 }
-.flex-item-V {
+.-V {
 	width: 100%;
 	height: 150rpx;
 	text-align: center;
