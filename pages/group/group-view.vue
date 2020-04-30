@@ -18,8 +18,8 @@
 						<view class="basis-max group-category">Interest</view>
 					</view>
 					<view class="basis-max bg-white margin-xs padding-sm radius group-action">
-						<button type="default">Invite</button>
-						<button type="default">Share</button>
+						<button type="default" @click="inviteFriend(item)">Invite</button>
+						<button type="default" open-type="share">Share</button>
 					</view>
 				</view>
 				<view class="basis-max bg-white margin-xs padding-sm radius group-admins">
@@ -68,8 +68,30 @@
 					this.item = res.result.data[0];
 				});
 		},
+		onShareAppMessage(res) {
+			if (res.from === 'button') { // 来自页面内分享按钮
+				console.log(res)
+			}
+			return {
+				title: this.item.name,
+				path: '/pages/group/group-view?id=' + this.item._id,
+				imageUrl: this.item.imgId,
+				// desc: this.item.description,
+				success: function() {
+					console.log("share success")
+				},
+				fail: function() {
+					console.log("share fail")
+				},
+				complete: function() {
+					console.log("share complete")
+				}
+			}
+		},
 		methods: {
-
+			inviteFriend(e) {
+				console.log("start to invite friends to %s", e._id)
+			}
 		}
 	}
 </script>

@@ -14,9 +14,9 @@
 						<view class="text-gray text-sm flex justify-between">
 							十天前
 							<view class="text-gray text-sm">
-								<text class="cuIcon-attentionfill margin-lr-xs"></text> 10
-								<text class="cuIcon-appreciatefill margin-lr-xs"></text> 20
-								<text class="cuIcon-messagefill margin-lr-xs"></text> 30
+								<text class="cuIcon-attentionfill margin-lr-xs"></text> {{ item.read }}
+								<text class="cuIcon-appreciatefill margin-lr-xs"></text> {{ item.vote }}
+								<text class="cuIcon-messagefill margin-lr-xs"></text> {{ item.comment }}
 							</view>
 						</view>
 					</view>

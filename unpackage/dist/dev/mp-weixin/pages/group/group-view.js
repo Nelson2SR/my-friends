@@ -201,7 +201,30 @@ var _default =
       _this.item = res.result.data[0];
     });
   },
-  methods: {} };exports.default = _default;
+  onShareAppMessage: function onShareAppMessage(res) {
+    if (res.from === 'button') {// 来自页面内分享按钮
+      console.log(res);
+    }
+    return {
+      title: this.item.name,
+      path: '/pages/group/group-view?id=' + this.item._id,
+      imageUrl: this.item.imgId,
+      // desc: this.item.description,
+      success: function success() {
+        console.log("share success");
+      },
+      fail: function fail() {
+        console.log("share fail");
+      },
+      complete: function complete() {
+        console.log("share complete");
+      } };
+
+  },
+  methods: {
+    inviteFriend: function inviteFriend(e) {
+      console.log("start to invite friends to %s", e._id);
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 21)["default"]))
 
 /***/ }),

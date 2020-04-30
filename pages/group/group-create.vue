@@ -147,7 +147,10 @@
 					 pic:String,
 					 type:String,
 					 owner:UUID,
-					 region:String
+					 region:String,
+					 read: Long,
+					 vote: Long,
+					 comment: Long
 				 }
 				 */
 
@@ -172,6 +175,9 @@
 					data.owner = 'userId'; // TODO, add wechat user id
 					data.type = '游戏';
 					data.region = this.region;
+					data.read = 0;
+					data.vote = 0;
+					data.comment = 0;
 					console.log('create group for data: ' + JSON.stringify(data));
 
 					uniCloud.uploadFile({
