@@ -1,7 +1,7 @@
 <template>
 	<view class="cu-bar tabbar margin-bottom-xl bg-white">
 		<view class="action text-green">
-			<view class="cuIcon-homefill"></view> 首页
+			<view class="cuIcon-homefill" v-on:click="viewHome"></view> 首页
 		</view>
 		<view class="action text-gray">
 			<view class="cuIcon-similar"></view> 分类
@@ -16,7 +16,7 @@
 			</view>
 			消息
 		</view>
-		<view class="action text-gray">
+		<view class="action text-gray" @click="viewProfile">
 			<view class="cuIcon-my">
 				<view class="cu-tag badge"></view>
 			</view>
@@ -36,6 +36,16 @@
 			onCreateGroup() {
 				uni.navigateTo({
 					url: "/pages/group/group-create"
+				})
+			},
+			viewProfile() {
+				uni.redirectTo({
+					url: "/pages/profile/profile"
+				})
+			},
+			viewHome() {
+				uni.redirectTo({
+					url: "/pages/tabBar/home/home"
 				})
 			}
 		}

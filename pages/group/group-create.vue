@@ -1,6 +1,6 @@
 <template>
 	<view class="uni-flex uni-row">
-		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
+		<cu-custom bgColor="bg-white" :isBack="true">
 			<block slot="backText">返回</block>
 			<block slot="content">新群</block>
 		</cu-custom>
@@ -144,13 +144,12 @@
 					 visibility:String,
 					 joinMethod:String,
 					 location:String,
-					 pic:String,
+					 imgUrl:String,
 					 type:String,
 					 owner:UUID,
 					 region:String,
 					 read: Long,
-					 vote: Long,
-					 comment: Long
+					 vote: Long
 				 }
 				 */
 

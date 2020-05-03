@@ -1,9 +1,8 @@
 <template>
-	<view class="container groups">
-		<view class="group-title">
-			<text class="title">Your groups</text>
-			<uploadFile></uploadFile>
-		</view>
+	<view class="container home">
+		<cu-custom bgColor="bg-white" :isBack="false">
+			<block slot="content">MY同伴</block>
+		</cu-custom>
 		<view class="example-box">
 			<view class="group-list" v-for="(group, key) in myGroups" :key="key">
 				<cu-card :item="group"></cu-card>

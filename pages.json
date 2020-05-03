@@ -36,6 +36,10 @@
             "path" : "test/uploadFile/uploadFile",
             "style" : {}
         }
+        ,{
+            "path" : "pages/profile/profile",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationStyle":"custom", //取消系统导航栏
