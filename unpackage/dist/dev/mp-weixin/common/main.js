@@ -17,10 +17,12 @@ _vue.default.prototype.$store = _store.default;var cuCustom = function cuCustom(
 
 
 
+// import cuSwiper from './colorui/components/cu-swiper.vue'
 
 _vue.default.component('cu-custom', cuCustom);
 _vue.default.component('cu-bar', cuBar);
 _vue.default.component('cu-card', cuCard);
+// Vue.component('cu-swiper', cuSwiper)
 _vue.default.config.productionTip = false;
 
 _App.default.mpType = 'app';

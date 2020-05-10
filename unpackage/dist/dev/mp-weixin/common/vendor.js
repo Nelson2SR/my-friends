@@ -1708,7 +1708,7 @@ var store = new _vuex.default.Store({
     avatarUrl: '',
     token: '',
     gender: 0,
-    open_id: '' },
+    openId: '' },
 
   mutations: {
     login: function login(state, provider) {
@@ -1720,7 +1720,7 @@ var store = new _vuex.default.Store({
       state.avatarUrl = provider.avatarUrl;
       state.token = provider.token;
       state.gender = provider.gender;
-      state.open_id = provider.open_id;
+      state.openId = provider.openId;
 
     },
     logout: function logout(state) {
@@ -1729,7 +1729,7 @@ var store = new _vuex.default.Store({
       state.token = '';
       state.avatarUrl = '';
       state.gender = 0;
-      state.open_id = '';
+      state.openId = '';
     } },
 
   actions: {

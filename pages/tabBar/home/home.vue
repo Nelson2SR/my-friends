@@ -3,6 +3,13 @@
 		<cu-custom bgColor="bg-white" :isBack="false">
 			<block slot="content">MY同伴</block>
 		</cu-custom>
+		<view class="cu-bar bg-white search fixed" :style="[{top:CustomBar + 'px'}]">
+			<view class="search-form round">
+				<text class="cuIcon-search"></text>
+				<input type="text" placeholder="搜索group" confirm-type="search" @input="searchIcon"></input>
+			</view>
+		</view>
+		
 		<view class="example-box">
 			<view class="group-list" v-for="(group, key) in myGroups" :key="key">
 				<cu-card :item="group"></cu-card>
@@ -14,12 +21,16 @@
 </template>
 
 <script>
+	import { mapState } from 'vuex'
+	
 	export default {
 		components: {
 
 		},
+		computed: mapState(['forcedLogin', 'hasLogin', 'userName', 'avatarUrl', 'gender', 'openId']),
 		data() {
 			return {
+				CustomBar: this.CustomBar,
 				myGroups: [],
 				background: ['color1', 'color2', 'color3'],
 				indicatorDots: true,
@@ -50,21 +61,36 @@
 					this.current = e.currentIndex;
 				}
 			},
-			createGroup(e) {
-
+			searchIcon(e) {
+				// let key = e.detail.value.toLowerCase();
+				// let list = this.myGroups;
+				// for (let i = 0; i < list.length; i++) {
+				// 	let a = key;
+				// 	let b = list[i].name.toLowerCase();
+				// 	if (b.search(a) != -1) {
+				// 		list[i].isShow = true
+				// 	} else {
+				// 		list[i].isShow = false
+				// 	}
+				// }
+				// this.cuIcon = list
 			}
 		},
 		onLoad: function() {
-			const owner = 'userId';
-			uniCloud.callFunction({
-					name: 'group-get-by-ownerId',
-					data: {
-						owner: owner
-					}
-				})
-				.then(res => {
-					this.myGroups = res.result.data;
-				});
+			console.log('Page onLoad' + this.openId);
+			
+			if (this.openId !== '') {
+				uniCloud.callFunction({
+						name: 'group-get-by-openId',
+						data: {
+							openId: this.openId
+						}
+					})
+					.then(res => {
+						console.log('My Groups: %s', JSON.stringify(res))
+						this.myGroups = res.result.data;
+					});
+			}
 		}
 	}
 </script>
@@ -121,5 +147,9 @@
 		padding: 10rpx 0;
 		font-size: 30rpx;
 		color: #666;
+	}
+	
+	page {
+		padding-top: 50px;
 	}
 </style>

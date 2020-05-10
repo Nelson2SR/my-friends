@@ -4,7 +4,7 @@
 		 :autoplay="true" interval="5000" duration="500" @change="cardSwiper" indicator-color="#8799a3"
 		 indicator-active-color="#0081ff">
 			<swiper-item v-for="(item,index) in swiperList" :key="index" :class="cardCur==index?'cur':''">
-				<view class="swiper-item">
+				<view class="swiper-item" @click="viewGroup(item)">
 					<image :src="item.imgUrl" mode="aspectFill"></image>
 				</view>
 			</swiper-item>
@@ -26,10 +26,10 @@
 			}
 		},
 		methods: {
-			onClick(e) {
-				console.log("The card value:" + e)
+			viewGroup(item) {
+				console.log("The card value:" + item)
 				uni.navigateTo({
-					url: "/pages/group/group-view?id=" + e._id
+					url: "/pages/group/group-view?id=" + item._id
 				})
 			},
 			DotStyle(e) {

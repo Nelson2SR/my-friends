@@ -2715,10 +2715,6 @@ scroll-view.cu-steps .cu-item {
 	-webkit-flex-basis: 80%;
 	        flex-basis: 80%;
 }
-.basis-max {
-	-webkit-flex-basis: 100%;
-	        flex-basis: 100%;
-}
 .flex-sub {
 	-webkit-box-flex: 1;
 	-webkit-flex: 1;

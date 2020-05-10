@@ -36,10 +36,10 @@ var _default =
 
 
   methods: {
-    onClick: function onClick(e) {
-      console.log("The card value:" + e);
+    viewGroup: function viewGroup(item) {
+      console.log("The card value:" + item);
       uni.navigateTo({
-        url: "/pages/group/group-view?id=" + e._id });
+        url: "/pages/group/group-view?id=" + item._id });
 
     },
     DotStyle: function DotStyle(e) {

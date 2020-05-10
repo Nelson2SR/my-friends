@@ -2,7 +2,7 @@
 	<view class="cu-card case" :class="isCard?'no-card':''" @click="onClick(item)">
 		<view class="cu-item shadow">
 			<view class="image">
-				<image :src="item.imgId" mode="widthFix"></image>
+				<image :src="item.imgUrl" mode="widthFix"></image>
 				<view class="cu-tag bg-blue" name="type">{{ item.type }}</view>
 				<view class="cu-bar bg-shadeBottom"> <text class="text-cut" name="description">{{ item.description }}</text></view>
 			</view>

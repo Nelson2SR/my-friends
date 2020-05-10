@@ -52,4 +52,7 @@
 	font-size: 30rpx;
 	color: #666;
 }
+page {
+	padding-top: 50px;
+}
 

@@ -167,7 +167,32 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ 16);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ 16);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var cuSwiper = function cuSwiper() {__webpack_require__.e(/*! require.ensure | colorui/components/cu-swiper */ "colorui/components/cu-swiper").then((function () {return resolve(__webpack_require__(/*! ../../colorui/components/cu-swiper.vue */ 96));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
 
 
 
@@ -179,10 +204,15 @@ var _vuex = __webpack_require__(/*! vuex */ 16);function ownKeys(object, enumera
       avatar: [
       'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'],
 
-      provider: '' };
+      provider: '',
+      myGroups: [] };
+
 
   },
-  computed: (0, _vuex.mapState)(['forcedLogin', 'hasLogin', 'userName', 'avatarUrl', 'gender']),
+  components: {
+    cuSwiper: cuSwiper },
+
+  computed: (0, _vuex.mapState)(['forcedLogin', 'hasLogin', 'userName', 'avatarUrl', 'gender', 'openId']),
   methods: _objectSpread({},
   (0, _vuex.mapActions)(['login']), {
     login_weixin: function login_weixin() {
@@ -214,7 +244,7 @@ var _vuex = __webpack_require__(/*! vuex */ 16);function ownKeys(object, enumera
                 provider: 'weixin',
                 success: function success(infoRes) {
                   console.log('User Info: %s', JSON.stringify(infoRes));
-                  infoRes.userInfo.open_id = openId;
+                  infoRes.userInfo.openId = openId;
                   self.toMain(infoRes.userInfo);
                 },
                 fail: function fail() {
@@ -246,7 +276,9 @@ var _vuex = __webpack_require__(/*! vuex */ 16);function ownKeys(object, enumera
           url: '/pages/tabBar/home/home' });
 
       } else {
-        uni.navigateBack();
+        uni.redirectTo({
+          url: '/pages/profile/profile' });
+
       }
     },
     getUser: function getUser(openId) {
@@ -265,8 +297,7 @@ var _vuex = __webpack_require__(/*! vuex */ 16);function ownKeys(object, enumera
           var user = self.createUser(openId);
 
           return user;
-        } else
-        {
+        } else {
           console.log('User is retrieved: %s', JSON.stringify(res.result.data[0]));
           return res.result.data[0];
         }
@@ -289,16 +320,20 @@ var _vuex = __webpack_require__(/*! vuex */ 16);function ownKeys(object, enumera
     } }),
 
   onLoad: function onLoad() {var _this = this;
-    var owner = 'userId';
-    uniCloud.callFunction({
-      name: 'group-get-by-ownerId',
-      data: {
-        owner: owner } }).
+    console.log('Page onLoad' + this.openId);
+
+    if (this.openId !== '') {
+      uniCloud.callFunction({
+        name: 'group-get-by-openId',
+        data: {
+          openId: this.openId } }).
 
 
-    then(function (res) {
-      _this.myGroups = res.result.data;
-    });
+      then(function (res) {
+        console.log('My Groups: %s', JSON.stringify(res));
+        _this.myGroups = res.result.data;
+      });
+    }
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 23)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

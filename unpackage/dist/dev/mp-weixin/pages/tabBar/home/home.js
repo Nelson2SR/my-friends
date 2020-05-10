@@ -142,41 +142,52 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  components: {},
+/* WEBPACK VAR INJECTION */(function(uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
-  data: function data() {
-    return {
-      myGroups: [],
-      background: ['color1', 'color2', 'color3'],
-      indicatorDots: true,
-      autoplay: true,
-      interval: 2000,
-      duration: 500,
-      items: ['ALL', 'GOING', 'SAVED', 'PAST'],
-      styles: [{
-        value: 'button',
-        text: '按钮',
-        checked: true },
 
-      {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ 16); //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { components: {}, computed: (0, _vuex.mapState)(['forcedLogin', 'hasLogin', 'userName', 'avatarUrl', 'gender', 'openId']), data: function data() {return { CustomBar: this.CustomBar, myGroups: [], background: ['color1', 'color2', 'color3'], indicatorDots: true, autoplay: true, interval: 2000, duration: 500, items: ['ALL', 'GOING', 'SAVED', 'PAST'], styles: [{ value: 'button', text: '按钮', checked: true }, {
         value: 'text',
         text: '文字' }],
 
@@ -194,21 +205,36 @@ var _default =
         this.current = e.currentIndex;
       }
     },
-    createGroup: function createGroup(e) {
-
+    searchIcon: function searchIcon(e) {
+      // let key = e.detail.value.toLowerCase();
+      // let list = this.myGroups;
+      // for (let i = 0; i < list.length; i++) {
+      // 	let a = key;
+      // 	let b = list[i].name.toLowerCase();
+      // 	if (b.search(a) != -1) {
+      // 		list[i].isShow = true
+      // 	} else {
+      // 		list[i].isShow = false
+      // 	}
+      // }
+      // this.cuIcon = list
     } },
 
   onLoad: function onLoad() {var _this = this;
-    var owner = 'userId';
-    uniCloud.callFunction({
-      name: 'group-get-by-ownerId',
-      data: {
-        owner: owner } }).
+    console.log('Page onLoad' + this.openId);
+
+    if (this.openId !== '') {
+      uniCloud.callFunction({
+        name: 'group-get-by-openId',
+        data: {
+          openId: this.openId } }).
 
 
-    then(function (res) {
-      _this.myGroups = res.result.data;
-    });
+      then(function (res) {
+        console.log('My Groups: %s', JSON.stringify(res));
+        _this.myGroups = res.result.data;
+      });
+    }
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 23)["default"]))
 
