@@ -1,0 +1,17 @@
+{
+	"errMsg": "getUserInfo:ok",
+	"rawData": "{\"nickName\":\"夏梦🐳\",\"gender\":2,\"language\":\"zh_CN\",\"city\":\"\",\"province\":\"\",\"country\":\"Singapore\",\"avatarUrl\":\"https://wx.qlogo.cn/mmopen/vi_32/icbkeULdicG5bxsyD45z7tCxjlUoTm1tjUIGNKQm8HGB04m4dOw3iaiab7xPUIFnFVQbto6NIASKXKCQqWSibk8KI7w/132\"}",
+	"userInfo": {
+		"nickName": "夏梦🐳",
+		"gender": 2,
+		"language": "zh_CN",
+		"city": "",
+		"province": "",
+		"country": "Singapore",
+		"avatarUrl": "https://wx.qlogo.cn/mmopen/vi_32/icbkeULdicG5bxsyD45z7tCxjlUoTm1tjUIGNKQm8HGB04m4dOw3iaiab7xPUIFnFVQbto6NIASKXKCQqWSibk8KI7w/132"
+	},
+	"signature": "888cd9e37deb50fe61f4c21fcc0f525cb2fe1f2e",
+	"encryptedData": "WyByS7akl7kcUIEo7qDJAldpGEI1H+xxFuqkI6qtNdzCJ0X4CKBEexXBECmAvnchPoC8YiSbaQ1GDqVe3xxCs1C1ujSd4SdxPcl6xGW9PZpkqJzZxOe9TdEMfEm9DytC3EnMt2fO+pZjJbCLILZkBcL1bZQHMEAUwufUu78KCcJtei+3x4a8eEZDFJgcMyzh5bRtS1tFfN8jUxmvI9rhZJZgXlhJ1PPKzujBEpeY9GmQNxLMOslpuDsMb/4cqerHYJlgMOgc1fBLTA/0TnlFQ93EWDZ4OLfRVM0pGmKqqLFp7K5AOZBDsIKRH3ocYn7ukffwb0zdJC9jn4cb/ksmyt319W9L5Otlhc08gvLA+BItH2WT3rC+few+i+4VZSLTjKTk/hnMiHSLksEMSOj5CegzgmZOgQ80n1bV9lJETG0P/ciT4UkaLgGnb0OqG5JDHJggMN+NeMBUKfGZ8xWoUg==",
+	"iv": "NKEQAj2fMy9isWjkG29SNw==",
+	"cloudID": "32_A5fILr_L-bNSJuwHSFwjB9R2VAEqnmYFVzPdhXRaM2iyn1ciReBSN2mC0jw"
+}
