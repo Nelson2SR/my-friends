@@ -6,5 +6,6 @@
 	"unicloud-test": {},
 	"activity":{},
 	"group":{},
-	"user":{}
+	"user":{},
+	"userSession":{}
 }

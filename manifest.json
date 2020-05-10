@@ -18,7 +18,8 @@
         },
         /* 模块配置 */
         "modules" : {
-            "Share" : {}
+            "Share" : {},
+            "OAuth" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -56,6 +57,14 @@
                 "share" : {
                     "weixin" : {
                         "appid" : "wx95bd5dc2182e3ad4",
+                        "appsecret" : "f51b12f21d601c68fb1fbc3bb1aea1ac",
+                        "UniversalLinks" : ""
+                    }
+                },
+                "oauth" : {
+                    "weixin" : {
+                        "appid" : "wx95bd5dc2182e3ad4",
+                        "appsecret" : "f51b12f21d601c68fb1fbc3bb1aea1ac",
                         "UniversalLinks" : ""
                     }
                 }

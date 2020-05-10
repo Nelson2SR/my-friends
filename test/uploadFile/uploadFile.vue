@@ -12,10 +12,12 @@
 <script>
 	var _self;
 	export default {
-		data: {
-			percent: 0,
-			loading: false,
-			disabled: false
+		data() {
+			return {
+				percent: 0,
+				loading: false,
+				disabled: false  
+			}
 		},
 		methods: {
 			upload: function() {

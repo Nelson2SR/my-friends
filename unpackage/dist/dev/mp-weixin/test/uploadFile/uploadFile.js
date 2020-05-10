@@ -143,11 +143,13 @@ __webpack_require__.r(__webpack_exports__);
 
 var _self;var _default =
 {
-  data: {
-    percent: 0,
-    loading: false,
-    disabled: false },
+  data: function data() {
+    return {
+      percent: 0,
+      loading: false,
+      disabled: false };
 
+  },
   methods: {
     upload: function upload() {
       _self = this;

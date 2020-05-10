@@ -11,12 +11,12 @@
 						<view class="cu-tag badge" :class="gender%2==0?'cuIcon-female bg-pink':'cuIcon-male bg-blue'"></view>
 					</view>
 				</view>
-				
+
 				<view class="padding-sm margin-xs radius text-lg">
 					<text :value="userName">{{userName}}</text>
 				</view>
 			</view>
-			
+
 			<view class="flex padding text-white" v-else>
 				<view class="padding-lg margin-xs radius">
 					<view class="cu-avatar round lg margin-left" v-for="(item,index) in avatar" :key="index" :style="[{ backgroundImage:'url(' + avatar[index] + ')' }]">
@@ -47,14 +47,65 @@
 			return {
 				avatar: [
 					'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'
-				]
+				],
+				provider: ''
 			}
 		},
 		computed: mapState(['forcedLogin', 'hasLogin', 'userName', 'avatarUrl', 'gender']),
 		methods: {
 			...mapActions(['login']),
-			toMain(userName) {
-				this.login(userName);
+			login_weixin() {
+				//微信登录
+				console.log('login as wechat')
+				let self = this;
+				wx.login({
+					success(res) {
+						console.log('login response: %s', JSON.stringify(res))
+						if (res.code) { //发起网络请求 
+							uniCloud.callFunction({
+								name:'oauth-login',
+								data:{
+									code: res.code,
+									appId: 'wx95bd5dc2182e3ad4',
+									appSecret: 'f51b12f21d601c68fb1fbc3bb1aea1ac'
+								}
+							}).then(res => {
+								console.log('OAuth Response: %s', JSON.stringify(res))
+								const openId = res.result.open_id
+								uni.setStorage({
+									"sessionId": res.result.session_id,
+									"openId": res.result.open_id
+								})
+								
+								const user = self.getUser(openId);
+								
+								uni.getUserInfo({
+									provider: 'weixin',
+									success(infoRes) {
+										console.log('User Info: %s', JSON.stringify(infoRes));
+										infoRes.userInfo.open_id = openId
+										self.toMain(infoRes.userInfo);
+									},
+									fail() {
+										uni.showToast({
+											icon: 'none',
+											position: 'bottom',
+											title: '登陆失败'
+										});
+								
+									}
+								})
+							})
+							
+							
+						} else {
+							console.log('登录失败！' + res.errMsg)
+						}
+					}
+				})
+			},
+			toMain(userInfo) {
+				this.login(userInfo);
 				/**
 				 * 强制登录时使用reLaunch方式跳转过来
 				 * 返回首页也使用reLaunch方式
@@ -67,40 +118,56 @@
 					uni.navigateBack();
 				}
 			},
-			login_weixin() {
-				//微信登录
+			getUser( openId ) {
 				let self = this;
-				uni.login({
-					provider: 'weixin',
-					success(loginRes) {
-						console.log(loginRes.authResult);
-
-						//Get user info
-						uni.getUserInfo({
-							provider: 'weixin',
-							success(infoRes) {
-								console.log('User Info: %s', JSON.stringify(infoRes.userInfo));
-
-							 	self.toMain(infoRes.userInfo);
-							},
-							fail() {
-								uni.showToast({
-									icon: 'none',
-									position: 'bottom',
-									title: '登陆失败'
-								});
-
-							}
-						})
-					},
-					fail(err) {
-						console.error('授权登陆失败： %s', JSON.stringify(err))
+				console.log('Check if user registered');
+				uniCloud.callFunction({
+					name:"user-get-by-openId",
+					data:{
+						open_id: openId
 					}
+				}).then(res => {
+					console.log('get user successfully: %s', JSON.stringify(res))
+					
+					if ( res.result.data.length === 0 ) {
+						console.log('User not found')
+						const user = self.createUser( openId )
+						
+						return user;
+					}
+					else {
+						console.log('User is retrieved: %s', JSON.stringify(res.result.data[0]))
+						return res.result.data[0]
+					}
+				})
+			},
+			createUser( openId ) {
+				let user = {};
+				user.name = this.userName;
+				user.provider = this.provider;
+				user.gender = this.gender;
+				user.open_id = openId;
+
+				uniCloud.callFunction({
+					name: "user-create",
+					data: user
+				}).then(res => {
+					console.log('create user successully: %s', JSON.stringify(res))
+					return res.result.id
 				})
 			}
 		},
 		onLoad() {
-			
+			const owner = 'userId';
+			uniCloud.callFunction({
+					name: 'group-get-by-ownerId',
+					data: {
+						owner: owner
+					}
+				})
+				.then(res => {
+					this.myGroups = res.result.data;
+				});
 		}
 	}
 </script>

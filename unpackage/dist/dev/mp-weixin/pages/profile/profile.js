@@ -129,7 +129,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uniCloud, uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -177,15 +177,66 @@ var _vuex = __webpack_require__(/*! vuex */ 16);function ownKeys(object, enumera
   data: function data() {
     return {
       avatar: [
-      'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'] };
+      'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'],
 
+      provider: '' };
 
   },
   computed: (0, _vuex.mapState)(['forcedLogin', 'hasLogin', 'userName', 'avatarUrl', 'gender']),
   methods: _objectSpread({},
   (0, _vuex.mapActions)(['login']), {
-    toMain: function toMain(userName) {
-      this.login(userName);
+    login_weixin: function login_weixin() {
+      //微信登录
+      console.log('login as wechat');
+      var self = this;
+      wx.login({
+        success: function success(res) {
+          console.log('login response: %s', JSON.stringify(res));
+          if (res.code) {//发起网络请求 
+            uniCloud.callFunction({
+              name: 'oauth-login',
+              data: {
+                code: res.code,
+                appId: 'wx95bd5dc2182e3ad4',
+                appSecret: 'f51b12f21d601c68fb1fbc3bb1aea1ac' } }).
+
+            then(function (res) {
+              console.log('OAuth Response: %s', JSON.stringify(res));
+              var openId = res.result.open_id;
+              uni.setStorage({
+                "sessionId": res.result.session_id,
+                "openId": res.result.open_id });
+
+
+              var user = self.getUser(openId);
+
+              uni.getUserInfo({
+                provider: 'weixin',
+                success: function success(infoRes) {
+                  console.log('User Info: %s', JSON.stringify(infoRes));
+                  infoRes.userInfo.open_id = openId;
+                  self.toMain(infoRes.userInfo);
+                },
+                fail: function fail() {
+                  uni.showToast({
+                    icon: 'none',
+                    position: 'bottom',
+                    title: '登陆失败' });
+
+
+                } });
+
+            });
+
+
+          } else {
+            console.log('登录失败！' + res.errMsg);
+          }
+        } });
+
+    },
+    toMain: function toMain(userInfo) {
+      this.login(userInfo);
       /**
                              * 强制登录时使用reLaunch方式跳转过来
                              * 返回首页也使用reLaunch方式
@@ -198,42 +249,58 @@ var _vuex = __webpack_require__(/*! vuex */ 16);function ownKeys(object, enumera
         uni.navigateBack();
       }
     },
-    login_weixin: function login_weixin() {
-      //微信登录
+    getUser: function getUser(openId) {
       var self = this;
-      uni.login({
-        provider: 'weixin',
-        success: function success(loginRes) {
-          console.log(loginRes.authResult);
+      console.log('Check if user registered');
+      uniCloud.callFunction({
+        name: "user-get-by-openId",
+        data: {
+          open_id: openId } }).
 
-          //Get user info
-          uni.getUserInfo({
-            provider: 'weixin',
-            success: function success(infoRes) {
-              console.log('User Info: %s', JSON.stringify(infoRes.userInfo));
+      then(function (res) {
+        console.log('get user successfully: %s', JSON.stringify(res));
 
-              self.toMain(infoRes.userInfo);
-            },
-            fail: function fail() {
-              uni.showToast({
-                icon: 'none',
-                position: 'bottom',
-                title: '登陆失败' });
+        if (res.result.data.length === 0) {
+          console.log('User not found');
+          var user = self.createUser(openId);
 
+          return user;
+        } else
+        {
+          console.log('User is retrieved: %s', JSON.stringify(res.result.data[0]));
+          return res.result.data[0];
+        }
+      });
+    },
+    createUser: function createUser(openId) {
+      var user = {};
+      user.name = this.userName;
+      user.provider = this.provider;
+      user.gender = this.gender;
+      user.open_id = openId;
 
-            } });
-
-        },
-        fail: function fail(err) {
-          console.error('授权登陆失败： %s', JSON.stringify(err));
-        } });
-
+      uniCloud.callFunction({
+        name: "user-create",
+        data: user }).
+      then(function (res) {
+        console.log('create user successully: %s', JSON.stringify(res));
+        return res.result.id;
+      });
     } }),
 
-  onLoad: function onLoad() {
+  onLoad: function onLoad() {var _this = this;
+    var owner = 'userId';
+    uniCloud.callFunction({
+      name: 'group-get-by-ownerId',
+      data: {
+        owner: owner } }).
 
+
+    then(function (res) {
+      _this.myGroups = res.result.data;
+    });
   } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 23)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })
 
