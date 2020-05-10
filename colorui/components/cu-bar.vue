@@ -22,21 +22,55 @@
 			</view>
 			我的
 		</view>
+		
+		<view class="cu-modal bottom-modal" :class="showModal?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white">
+					<view class="action text-green" @tap="doAction">确定</view>
+					<view class="action text-blue" @tap="hideModal">取消</view>
+				</view>
+				<view class="padding-xl">
+					请先登录！
+				</view>
+			</view>
+		</view>
+<!-- 		<cu-dialog :showModal="showModal" :modalDetail="modalDetail" :confirmAction="confirmAction"></cu-dialog> -->
 	</view>
 </template>
 
 <script>
+	import cuDialog from "../../colorui/components/cu-dialog.vue"
+	import {
+		mapState
+	} from 'vuex'
+	
 	export default {
+		components:{
+			cuDialog
+		},
+		
 		data() {
 			return {
-				
+				showModal: false,
+				modalDetail: {},
+				confirmAction: function() {
+						uni.redirectTo({
+							url: "/pages/profile/profile"
+						})
+					}
 			}
 		},
+		computed: mapState(['hasLogin']),
 		methods:{
 			onCreateGroup() {
-				uni.navigateTo({
-					url: "/pages/group/group-create"
-				})
+				if ( !this.hasLogin ) {
+					this.showModal = true
+				}
+				else {
+					uni.navigateTo({
+						url: "/pages/group/group-create"
+					})
+				}
 			},
 			viewProfile() {
 				uni.redirectTo({
@@ -46,6 +80,14 @@
 			viewHome() {
 				uni.redirectTo({
 					url: "/pages/tabBar/home/home"
+				})
+			},
+			hideModal(e) {
+				this.showModal = false
+			},
+			doAction() {
+				uni.redirectTo({
+					url: "/pages/profile/profile"
 				})
 			}
 		}

@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "cu-dialog": "/colorui/components/cu-dialog"
+  },
   "component": true
 }

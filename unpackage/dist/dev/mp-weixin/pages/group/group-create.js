@@ -131,202 +131,193 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni, uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var graceChecker = __webpack_require__(/*! ../../common/graceChecker.js */ 58);
-var _self;
-var tempFilePaths;var _default =
-{
-  components: {},
-
-
-  props: {
-    showForm: {
-      type: Boolean,
-      default: true },
-
-    showLoading: {
-      type: Boolean,
-      default: false } },
-
-
-  data: function data() {
-    return {
-      "pickPic": "选择照片",
-      imgList: [],
-      region: ['广东省', '广州市', '海珠区'],
-      joinMethod: "",
-      visibility: "",
-      description: "" };
-
-  },
-  onLoad: function onLoad(options) {
-    console.log("landed on create-group page");
-  },
-  methods: {
-    createGroup: function createGroup(e) {
-
-      //定义表单规则
-      var rule = [{
-        name: "name",
-        checkType: "string",
-        checkRule: "1,10",
-        errorMsg: "姓名应为1-10个字符" },
-
-      {
-        name: "description",
-        checkType: "string",
-        checkRule: "1,50",
-        errorMsg: "请控制为1-50个字符" }];
+/* WEBPACK VAR INJECTION */(function(uni, uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
-      /**
-                                     * FormData:
-                                     {
-                                    	 name:String,
-                                    	 description:String,
-                                    	 visibility:String,
-                                    	 joinMethod:String,
-                                    	 location:String,
-                                    	 imgUrl:String,
-                                    	 type:String,
-                                    	 owner:UUID,
-                                    	 region:String,
-                                    	 read: Long,
-                                    	 vote: Long
-                                     }
-                                     */
 
-      //进行表单检查
-      var formData = e.detail.value;
-      console.log('form data:' + JSON.stringify(formData));
-      var checkRes = graceChecker.check(formData, rule);
 
-      if (checkRes && this.visibility !== undefined && this.joinMethod !== undefined) {
-        uni.showToast({
-          title: "验证通过!",
-          icon: "none" });
 
-        this.showForm = false;
-        this.showLoading = true;
 
-        var data = e.detail.value;
-        data.createdAt = new Date();
-        data.createdBy = 1;
-        data.visibility = this.visibility;
-        data.joinMethod = this.joinMethod;
-        data.owner = 'userId'; // TODO, add wechat user id
-        data.type = '游戏';
-        data.region = this.region;
-        data.read = 0;
-        data.vote = 0;
-        data.comment = 0;
-        console.log('create group for data: ' + JSON.stringify(data));
 
-        uniCloud.uploadFile({
-          filePath: this.imgList[0],
-          onUploadProgress: function onUploadProgress(progressEvent) {
-            // console.log(progressEvent);
-            var percentCompleted = Math.round(
-            progressEvent.loaded * 100 / progressEvent.total);
 
-          },
-          success: function success(res) {
-            console.log("successfully upload img " + res.fileID);
-            data.imgId = res.fileID;
 
-            uniCloud.callFunction({
-              name: 'group-create',
-              data: data }).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ 16); //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var graceChecker = __webpack_require__(/*! ../../common/graceChecker.js */ 58);var _self;var tempFilePaths;var _default = { components: {}, props: { showForm: { type: Boolean, default: true }, showLoading: { type: Boolean, default: false } }, data: function data() {return { "pickPic": "选择照片", imgList: [], region: ['广东省', '广州市', '海珠区'], joinMethod: "", visibility: "", description: "", showDialog: false };}, computed: (0, _vuex.mapState)(['openId']), onLoad: function onLoad(options) {console.log("landed on create-group page");}, methods: { createGroup: function createGroup(e) {//定义表单规则
+      var rule = [{ name: "name", checkType: "string", checkRule: "1,10", errorMsg: "姓名应为1-10个字符" }, { name: "description", checkType: "string", checkRule: "1,50", errorMsg: "请控制为1-50个字符" }]; //进行表单检查
+      var formData = e.detail.value;console.log('form data:' + JSON.stringify(formData));var checkRes = graceChecker.check(formData, rule);if (checkRes && this.visibility !== undefined && this.joinMethod !== undefined) {uni.showToast({ title: "验证通过!", icon: "none" });this.showForm = false;this.showLoading = true;var data = e.detail.value;data.createdAt = new Date();data.createdBy = 1;data.visibility = this.visibility;data.joinMethod = this.joinMethod;data.openId = this.openId;data.type = '游戏';data.region = this.region;data.read = 0;data.vote = 0;data.comment = 0;console.log('create group for data: ' + JSON.stringify(data));uniCloud.uploadFile({ filePath: this.imgList[0], onUploadProgress: function onUploadProgress(progressEvent) {// console.log(progressEvent);
+            var percentCompleted = Math.round(progressEvent.loaded * 100 / progressEvent.total);}, success: function success(res) {console.log("successfully upload img " + res.fileID);data.imgUrl = res.fileID;uniCloud.callFunction({ name: 'group-create', data: data }).
 
             then(function (res) {
               console.log("success with" + JSON.stringify(res));

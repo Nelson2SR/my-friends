@@ -91,6 +91,11 @@
 	var graceChecker = require("../../common/graceChecker.js");
 	var _self;
 	var tempFilePaths;
+	
+	import {
+		mapState
+	} from 'vuex'
+	
 	export default {
 		components: {
 			
@@ -112,9 +117,12 @@
 				region: ['广东省', '广州市', '海珠区'],
 				joinMethod: "",
 				visibility: "",
-				description: ""
+				description: "",
+				showDialog: false
 			}
 		},
+		computed: mapState(['openId']),
+		
 		onLoad: function(options) {
 			console.log("landed on create-group page")
 		},
@@ -136,23 +144,6 @@
 					}
 				];
 
-				/**
-				 * FormData:
-				 {
-					 name:String,
-					 description:String,
-					 visibility:String,
-					 joinMethod:String,
-					 location:String,
-					 imgUrl:String,
-					 type:String,
-					 owner:UUID,
-					 region:String,
-					 read: Long,
-					 vote: Long
-				 }
-				 */
-
 				//进行表单检查
 				const formData = e.detail.value;
 				console.log('form data:' + JSON.stringify(formData))
@@ -171,7 +162,7 @@
 					data.createdBy = 1;
 					data.visibility = this.visibility;
 					data.joinMethod = this.joinMethod;
-					data.owner = 'userId'; // TODO, add wechat user id
+					data.openId = this.openId;
 					data.type = '游戏';
 					data.region = this.region;
 					data.read = 0;
@@ -189,7 +180,7 @@
 						},
 						success(res) {
 							console.log("successfully upload img " + res.fileID)
-							data.imgId = res.fileID;
+							data.imgUrl = res.fileID;
 
 							uniCloud.callFunction({
 									name: 'group-create',

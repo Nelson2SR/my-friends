@@ -14,7 +14,7 @@ const store = new Vuex.Store({
 		avatarUrl: '',
 		token: '',
 		gender: 0,
-		open_id: ''
+		openId: ''
 	},
 	mutations: {
 		login(state, provider) {
@@ -26,7 +26,7 @@ const store = new Vuex.Store({
 			state.avatarUrl = provider.avatarUrl;
 			state.token = provider.token;
 			state.gender = provider.gender;
-			state.open_id = provider.open_id;
+			state.openId = provider.openId;
 			
 		},
 		logout(state) {
@@ -35,7 +35,7 @@ const store = new Vuex.Store({
 			state.token = '';
 			state.avatarUrl = '';
 			state.gender = 0;
-			state.open_id = '';
+			state.openId = '';
 		}
 	},
 	actions:{

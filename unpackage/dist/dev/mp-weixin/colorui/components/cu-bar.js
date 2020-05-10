@@ -112,45 +112,79 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ 16);var cuDialog = function cuDialog() {__webpack_require__.e(/*! require.ensure | colorui/components/cu-dialog */ "colorui/components/cu-dialog").then((function () {return resolve(__webpack_require__(/*! ../../colorui/components/cu-dialog.vue */ 101));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+{
+  components: {
+    cuDialog: cuDialog },
+
+
+  data: function data() {
+    return {
+      showModal: false,
+      modalDetail: {},
+      confirmAction: function confirmAction() {
+        uni.redirectTo({
+          url: "/pages/profile/profile" });
+
+      } };
 
   },
+  computed: (0, _vuex.mapState)(['hasLogin']),
   methods: {
     onCreateGroup: function onCreateGroup() {
-      uni.navigateTo({
-        url: "/pages/group/group-create" });
+      if (!this.hasLogin) {
+        this.showModal = true;
+      } else
+      {
+        uni.navigateTo({
+          url: "/pages/group/group-create" });
 
+      }
     },
     viewProfile: function viewProfile() {
       uni.redirectTo({
@@ -160,6 +194,14 @@ var _default =
     viewHome: function viewHome() {
       uni.redirectTo({
         url: "/pages/tabBar/home/home" });
+
+    },
+    hideModal: function hideModal(e) {
+      this.showModal = false;
+    },
+    doAction: function doAction() {
+      uni.redirectTo({
+        url: "/pages/profile/profile" });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
