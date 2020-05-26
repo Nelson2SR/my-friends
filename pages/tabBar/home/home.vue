@@ -79,18 +79,16 @@
 		onLoad: function() {
 			console.log('Page onLoad' + this.openId);
 			
-			if (this.openId !== '') {
-				uniCloud.callFunction({
-						name: 'group-get-by-openId',
-						data: {
-							openId: this.openId
-						}
-					})
-					.then(res => {
-						console.log('My Groups: %s', JSON.stringify(res))
-						this.myGroups = res.result.data;
-					});
-			}
+			uniCloud.callFunction({
+					name: 'group-get-by-pageId',
+					data: {
+						pageId: 1
+					}
+				})
+				.then(res => {
+					console.log('My Groups: %s', JSON.stringify(res))
+					this.myGroups = res.result.data;
+				});
 		}
 	}
 </script>

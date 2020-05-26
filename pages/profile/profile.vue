@@ -101,10 +101,10 @@
 								}
 							}).then(res => {
 								console.log('OAuth Response: %s', JSON.stringify(res))
-								const openId = res.result.open_id
+								const openId = res.result.openId
 								uni.setStorage({
-									"sessionId": res.result.session_id,
-									"openId": res.result.open_id
+									"sessionId": res.result.sessionId,
+									"openId": openId
 								})
 
 								const user = self.getUser(openId);
@@ -152,11 +152,11 @@
 			},
 			getUser(openId) {
 				let self = this;
-				console.log('Check if user registered');
+				console.log('Check if user registered with openId %s', openId);
 				uniCloud.callFunction({
 					name: "user-get-by-openId",
 					data: {
-						open_id: openId
+						openId: openId
 					}
 				}).then(res => {
 					console.log('get user successfully: %s', JSON.stringify(res))

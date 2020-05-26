@@ -4,8 +4,16 @@
 
 {
 	"unicloud-test": {},
-	"activity":{},
-	"group":{},
-	"user":{},
-	"userSession":{}
+	"activity": {
+		
+	},
+	"group": {
+		
+	},
+	"user": {
+		
+	},
+	"userSession": {
+		
+	}
 }

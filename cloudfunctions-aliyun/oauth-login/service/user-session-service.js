@@ -18,8 +18,8 @@ class UserSessionService {
 		const now = new Date()
 		const expiredAt = new Date(now.getTime() + expireDurationInMin*60000)
 		const userSession = {
-			session_key: sessionKey,
-			open_id: openId,
+			sessionKey: sessionKey,
+			openId: openId,
 			createdAt: now.toISOString(),
 			expiredAt: expiredAt.toISOString()
 		}

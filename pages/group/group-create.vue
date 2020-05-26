@@ -121,10 +121,11 @@
 				showDialog: false
 			}
 		},
-		computed: mapState(['openId']),
+		computed: mapState(['openId', 'gender', 'avatarUrl']),
 		
 		onLoad: function(options) {
 			console.log("landed on create-group page")
+			console.log("OpenId: %s", this.openId)
 		},
 		methods: {
 			createGroup: function(e) {
@@ -162,12 +163,19 @@
 					data.createdBy = 1;
 					data.visibility = this.visibility;
 					data.joinMethod = this.joinMethod;
-					data.openId = this.openId;
 					data.type = '游戏';
 					data.region = this.region;
 					data.read = 0;
 					data.vote = 0;
 					data.comment = 0;
+					const owner = {
+						openId: this.openId,
+						gender: this.gender,
+						avatarUrl: this.avatarUrl
+					}
+					data.owner = owner;
+					data.members = [owner];
+					data.admins = [owner];
 					console.log('create group for data: ' + JSON.stringify(data));
 
 					uniCloud.uploadFile({

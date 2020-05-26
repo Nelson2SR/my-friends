@@ -4,7 +4,7 @@ exports.main = async (event, context) => {
 	console.log('event:' + event)
 	const collection = db.collection('user')
 	const res = await collection.where({
-		open_id: event.open_id
+		openId: event.openId
 	}).get()
 	
 	return res

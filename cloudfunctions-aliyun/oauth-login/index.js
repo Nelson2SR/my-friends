@@ -33,8 +33,8 @@ exports.main = async (event, context) => {
 		console.log("response" + JSON.stringify(result))
 		
 		const responseData = {
-			session_id: result.id,
-			open_id: openId
+			sessionId: result.id,
+			openId: openId
 		}
 		return responseData;
 	}
