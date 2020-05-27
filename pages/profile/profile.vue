@@ -42,11 +42,26 @@
 		<cu-swiper :swiperList="myGroups" v-if="myGroups.length > 0"></cu-swiper>
 		<view class="solids-bottom padding-xs flex align-center" v-else>
 			<view class="flex-sub text-center">
+				<view class="solid-bottom text-df padding">你还没创建任何群组</view>
+			</view>
+		</view>
+		<!-- #endif -->
+
+		<!-- my joined groups module -->
+		<!-- #ifndef MP-ALIPAY -->
+		<view class="cu-bar bg-white margin-top">
+			<view class="action">
+				<text class="cuIcon-title text-pink"></text> 其他群组
+			</view>
+		</view>
+		<cu-swiper :swiperList="myOtherGroups" v-if="myOtherGroups.length > 0"></cu-swiper>
+		<view class="solids-bottom padding-xs flex align-center" v-else>
+			<view class="flex-sub text-center">
 				<view class="solid-bottom text-df padding">你还没加入任何群组</view>
 			</view>
 		</view>
 		<!-- #endif -->
-		
+
 		<!-- my interest -->
 		<view class="cu-bar bg-white margin-top">
 			<view class="action">
@@ -64,7 +79,7 @@
 		mapMutations,
 		mapActions
 	} from 'vuex'
-	
+
 	import cuSwiper from '../../colorui/components/cu-swiper.vue'
 
 	export default {
@@ -75,6 +90,7 @@
 				],
 				provider: '',
 				myGroups: [],
+				myOtherGroups: []
 
 			}
 		},
@@ -107,8 +123,10 @@
 									"openId": openId
 								})
 
+								// creat user if user not exist
 								const user = self.getUser(openId);
 
+								// get user info from weixin
 								uni.getUserInfo({
 									provider: 'weixin',
 									success(infoRes) {
@@ -122,7 +140,6 @@
 											position: 'bottom',
 											title: '登陆失败'
 										});
-
 									}
 								})
 							})
@@ -192,6 +209,7 @@
 			console.log('Page onLoad' + this.openId);
 
 			if (this.openId !== '') {
+				//get my created groups
 				uniCloud.callFunction({
 						name: 'group-get-by-openId',
 						data: {
@@ -202,6 +220,20 @@
 						console.log('My Groups: %s', JSON.stringify(res))
 						this.myGroups = res.result.data;
 					});
+				// get my other groups
+				uniCloud.callFunction({
+						name: 'group-get-by-member-openId',
+						data: {
+							openId: this.openId
+						}
+					})
+					.then(res => {
+						console.log('My Other Groups: %s', JSON.stringify(res))
+						this.myOtherGroups = res.result.data;
+					}).catch(err => {
+						console.error('Error retriving my other group: %s', JSON.stringify(err))
+					});	
+
 			}
 		}
 	}

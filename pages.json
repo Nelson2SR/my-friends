@@ -40,6 +40,10 @@
             "path" : "pages/profile/profile",
             "style" : {}
         }
+        ,{
+            "path" : "pages/post/post-create",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationStyle":"custom", //取消系统导航栏

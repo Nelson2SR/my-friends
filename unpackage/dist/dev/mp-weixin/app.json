@@ -8,7 +8,8 @@
     "pages/group/group-create",
     "pages/group/group-view",
     "test/uploadFile/uploadFile",
-    "pages/profile/profile"
+    "pages/profile/profile",
+    "pages/post/post-create"
   ],
   "subPackages": [],
   "window": {
@@ -22,6 +23,5 @@
     "cu-custom": "/colorui/components/cu-custom",
     "cu-bar": "/colorui/components/cu-bar",
     "cu-card": "/colorui/components/cu-card"
-  },
-  "sitemapLocation": "sitemap67.json"
+  }
 }

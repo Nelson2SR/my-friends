@@ -189,7 +189,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ 12);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var cuSwiper = function cuSwiper() {__webpack_require__.e(/*! require.ensure | colorui/components/cu-swiper */ "colorui/components/cu-swiper").then((function () {return resolve(__webpack_require__(/*! ../../colorui/components/cu-swiper.vue */ 93));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ 12);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var cuSwiper = function cuSwiper() {__webpack_require__.e(/*! require.ensure | colorui/components/cu-swiper */ "colorui/components/cu-swiper").then((function () {return resolve(__webpack_require__(/*! ../../colorui/components/cu-swiper.vue */ 99));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -204,7 +219,8 @@ var _vuex = __webpack_require__(/*! vuex */ 12);function ownKeys(object, enumera
       'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'],
 
       provider: '',
-      myGroups: [] };
+      myGroups: [],
+      myOtherGroups: [] };
 
 
   },
@@ -237,8 +253,10 @@ var _vuex = __webpack_require__(/*! vuex */ 12);function ownKeys(object, enumera
                 "openId": openId });
 
 
+              // creat user if user not exist
               var user = self.getUser(openId);
 
+              // get user info from weixin
               uni.getUserInfo({
                 provider: 'weixin',
                 success: function success(infoRes) {
@@ -251,7 +269,6 @@ var _vuex = __webpack_require__(/*! vuex */ 12);function ownKeys(object, enumera
                     icon: 'none',
                     position: 'bottom',
                     title: '登陆失败' });
-
 
                 } });
 
@@ -322,6 +339,7 @@ var _vuex = __webpack_require__(/*! vuex */ 12);function ownKeys(object, enumera
     console.log('Page onLoad' + this.openId);
 
     if (this.openId !== '') {
+      //get my created groups
       uniCloud.callFunction({
         name: 'group-get-by-openId',
         data: {
@@ -332,6 +350,20 @@ var _vuex = __webpack_require__(/*! vuex */ 12);function ownKeys(object, enumera
         console.log('My Groups: %s', JSON.stringify(res));
         _this.myGroups = res.result.data;
       });
+      // get my other groups
+      uniCloud.callFunction({
+        name: 'group-get-by-member-openId',
+        data: {
+          openId: this.openId } }).
+
+
+      then(function (res) {
+        console.log('My Other Groups: %s', JSON.stringify(res));
+        _this.myOtherGroups = res.result.data;
+      }).catch(function (err) {
+        console.error('Error retriving my other group: %s', JSON.stringify(err));
+      });
+
     }
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 19)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
