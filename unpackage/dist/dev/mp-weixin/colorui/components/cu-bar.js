@@ -154,7 +154,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ 12);var cuDialog = function cuDialog() {__webpack_require__.e(/*! require.ensure | colorui/components/cu-dialog */ "colorui/components/cu-dialog").then((function () {return resolve(__webpack_require__(/*! ../../colorui/components/cu-dialog.vue */ 104));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _vuex = __webpack_require__(/*! vuex */ 12);var cuDialog = function cuDialog() {__webpack_require__.e(/*! require.ensure | colorui/components/cu-dialog */ "colorui/components/cu-dialog").then((function () {return resolve(__webpack_require__(/*! ../../colorui/components/cu-dialog.vue */ 114));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 

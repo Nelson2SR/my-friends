@@ -37,7 +37,7 @@
 
 		</view>
 
-		<view class="cu-bar search bg-white" v-if="isMember">
+		<view class="cu-bar search bg-white margin-top" v-if="isMember">
 			<view class="cu-avatar round" :style="{backgroundImage: `url(${avatarUrl})`}"></view>
 			<view class="search-form round">
 				<text class="cuIcon-search"></text>
