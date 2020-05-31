@@ -130,8 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uniCloud, uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-
+/* WEBPACK VAR INJECTION */(function(uni, uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -240,8 +239,16 @@ var _vuex = __webpack_require__(/*! vuex */ 12); //
 //
 //
 //
-//
-var cuPost = function cuPost() {Promise.all(/*! require.ensure | colorui/components/cu-post */[__webpack_require__.e("common/vendor"), __webpack_require__.e("colorui/components/cu-post")]).then((function () {return resolve(__webpack_require__(/*! @/colorui/components/cu-post.vue */ 104));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default = { components: { cuPost: cuPost }, data: function data() {return { groupId: '', avatar: [], posts: [], item: {}, TabCur: 0, scrollLeft: 0, menuBorder: false, menuArrow: false, menuCard: false, isMember: false };}, computed: (0, _vuex.mapState)(['openId', 'gender', 'avatarUrl']), onLoad: function onLoad(options) {var _this = this;console.log('Page loaded');self = this;console.log(options.id);console.log("OpenId : %s", self.openId);this.groupId = options.id;uniCloud.callFunction({ name: 'group-get-by-docId', data: { id: options.id } }).then(function (res) {console.log("group detail: %s", JSON.stringify(res));_this.item = res.result.data[0];_this.item.members.forEach(function (member) {self.avatar.push(member.avatarUrl);console.log("member openId: %s, this user openId: %s", member.openId, self.openId);if (member.openId === self.openId) {self.isMember = true;}});});uniCloud.callFunction({ name: 'post-get-by-groupId', data: { groupId: options.id } }).
+var cuPost = function cuPost() {Promise.all(/*! require.ensure | colorui/components/cu-post */[__webpack_require__.e("common/vendor"), __webpack_require__.e("colorui/components/cu-post")]).then((function () {return resolve(__webpack_require__(/*! @/colorui/components/cu-post.vue */ 104));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default = { components: { cuPost: cuPost }, data: function data() {return { groupId: '', avatar: [], posts: [], item: {}, TabCur: 0, scrollLeft: 0, menuBorder: false, menuArrow: false, menuCard: false, isMember: false };}, computed: (0, _vuex.mapState)(['openId', 'gender', 'avatarUrl']), onLoad: function onLoad(options) {var _this = this;console.log('Page loaded');uni.showLoading({ title: '加载中...' });self = this;console.log(options.id);console.log("OpenId : %s", self.openId);this.groupId = options.id;uniCloud.callFunction({ name: 'group-get-by-docId', data: { id: options.id } }).then(function (res) {uni.hideLoading();console.log("group detail: %s", JSON.stringify(res));_this.item = res.result.data[0];_this.item.members.forEach(function (member) {self.avatar.push(member.avatarUrl);console.log("member openId: %s, this user openId: %s", member.openId, self.openId);if (member.openId === self.openId) {self.isMember = true;}});}).catch(function (err) {
+      uni.hideLoading();
+      console.error("Error occur while retriving group detail.");
+    });
+
+    uniCloud.callFunction({
+      name: 'post-get-by-groupId',
+      data: {
+        groupId: options.id } }).
+
     then(function (res) {
       console.log("posts detail: %s", JSON.stringify(res));
       _this.posts = res.result.data;
@@ -251,6 +258,7 @@ var cuPost = function cuPost() {Promise.all(/*! require.ensure | colorui/compone
   },
   onShow: function onShow() {var _this2 = this;
     console.log('Page shown');
+
     uniCloud.callFunction({
       name: 'post-get-by-groupId',
       data: {
@@ -262,9 +270,6 @@ var cuPost = function cuPost() {Promise.all(/*! require.ensure | colorui/compone
     }).catch(function (err) {
       console.error("Error retrieving posts");
     });
-  },
-  onReady: function onReady() {
-    console.log('Page ready');
   },
   onShareAppMessage: function onShareAppMessage(res) {
     if (res.from === 'button') {// 来自页面内分享按钮
@@ -321,7 +326,7 @@ var cuPost = function cuPost() {Promise.all(/*! require.ensure | colorui/compone
         animationDuration: 200 });
 
     } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 19)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 19)["default"]))
 
 /***/ }),
 

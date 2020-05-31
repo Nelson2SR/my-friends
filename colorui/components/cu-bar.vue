@@ -63,6 +63,7 @@
 		computed: mapState(['hasLogin']),
 		methods:{
 			onCreateGroup() {
+				console.log('HasLogin: %s', this.hasLogin)
 				if ( !this.hasLogin ) {
 					this.showModal = true
 				}

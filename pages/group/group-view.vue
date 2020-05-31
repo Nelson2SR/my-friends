@@ -5,7 +5,6 @@
 			<!-- <block slot="content">表单</block> -->
 		</cu-custom>
 
-
 		<view class="bg-white padding">
 			<view class="grid margin-bottom text-center col-1">
 				<view class="basis-max bg-white margin-xs padding-sm radius group-name text-bold text-xl">{{item.name}}</view>
@@ -82,6 +81,9 @@
 
 		onLoad: function(options) {
 			console.log('Page loaded')
+			uni.showLoading({
+				title: '加载中...'
+			})
 			self = this;
 			console.log(options.id);
 			console.log("OpenId : %s", self.openId);
@@ -94,6 +96,7 @@
 					}
 				})
 				.then(res => {
+					uni.hideLoading()
 					console.log("group detail: %s", JSON.stringify(res));
 					this.item = res.result.data[0];
 					this.item.members.forEach((member) => {
@@ -103,6 +106,10 @@
 							self.isMember = true
 						}
 					});
+				})
+				.catch(err => {
+					uni.hideLoading()
+					console.error("Error occur while retriving group detail.")
 				});
 
 			uniCloud.callFunction({
@@ -119,6 +126,7 @@
 		},
 		onShow() {
 			console.log('Page shown')
+			
 			uniCloud.callFunction({
 				name: 'post-get-by-groupId',
 				data: {
@@ -130,9 +138,6 @@
 			}).catch(err => {
 				console.error("Error retrieving posts")
 			})
-		},
-		onReady() {
-			console.log('Page ready')
 		},
 		onShareAppMessage(res) {
 			if (res.from === 'button') { // 来自页面内分享按钮
