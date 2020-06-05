@@ -22,6 +22,17 @@
 			</view>
 			<!-- #endif -->
 			
+			<!-- #ifndef MP-ALIPAY -->
+			<view class="cu-form-group">
+				<view class="title">类别选择</view>
+				<picker mode="multiSelector" @change="MultiChange" @columnchange="MultiColumnChange" :value="multiIndex" :range="multiArray">
+					<view class="picker">
+						{{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}
+					</view>
+				</picker>
+			</view>
+			<!-- #endif -->
+			
 			<cu-upload-file v-on:addImage="addImage"></cu-upload-file>
 			
 			<view class="cu-bar bg-white margin-top solid-bottom">
@@ -100,7 +111,12 @@
 				joinMethod: "",
 				visibility: "",
 				description: "",
-				showDialog: false
+				showDialog: false,
+				groupTopicsMap: {},
+				multiArray: [
+					
+				],
+				multiIndex: [0, 0],
 			}
 		},
 		computed: mapState(['openId', 'gender', 'avatarUrl']),
@@ -108,6 +124,33 @@
 		onLoad: function(options) {
 			console.log("landed on create-group page")
 			console.log("OpenId: %s", this.openId)
+			uniCloud.callFunction({
+				name:'grouptopic-get',
+				data:{}
+			}).then(res => {
+				console.log("Successfully retrieved group topics: %s", JSON.stringify(res))
+				const groupTopicsData = res.result.data
+				const groupTopicsMap = {}
+				const groupTopicNames = []
+				groupTopicsData.forEach(groupTopic => {
+					groupTopicNames.push(groupTopic.name)
+					const groupTypeNames = []
+					groupTopic.groupTypes.forEach(groupType => {
+						groupTypeNames.push(groupType.name)
+					})
+			
+					groupTopicsMap[groupTopic.name] = groupTypeNames
+				})
+				console.log("groupTopics name map: %s", JSON.stringify(groupTopicsMap))
+				this.groupTopicsMap = groupTopicsMap
+				// let groupTopicName = groupTopicsMap.keys()
+				// console.log("first key: %s", groupTopicName.next().value)
+				// console.log("groupTopics name list and first groupTypes: %s - %s", JSON.stringify(groupTopicName), groupTopicsMap[groupTopicName[0]])
+				this.multiArray.push(groupTopicNames)
+				this.multiArray.push(groupTopicsMap[groupTopicNames[0]])
+			}).catch(err => {
+				console.log("Error occurs while retrieving group topics: %s", JSON.stringify(err))
+			})
 		},
 		methods: {
 			createGroup: function(e) {
@@ -145,7 +188,10 @@
 					data.createdBy = 1;
 					data.visibility = this.visibility;
 					data.joinMethod = this.joinMethod;
-					data.type = '游戏';
+					data.type = {
+						name:this.multiArray[1][this.multiIndex[1]],
+						groupTopic:this.multiArray[0][this.multiIndex[1]]
+					};
 					data.region = this.region;
 					data.read = 0;
 					data.vote = 0;
@@ -241,6 +287,30 @@
 			},
 			onDescriptionInput(e) {
 				this.description = e.detail.value
+			},
+			MultiChange(e) {
+				this.multiIndex = e.detail.value
+			},
+			MultiColumnChange(e) {
+				let data = {
+					multiArray: this.multiArray,
+					multiIndex: this.multiIndex
+				};
+				console.log("current picker data: %s - %s", JSON.stringify(data), JSON.stringify(e))
+				data.multiIndex[e.detail.column] = e.detail.value;
+				switch (e.detail.column) {
+					case 0:
+					    let groupTopicName = this.multiArray[0][e.detail.value]
+						let groupTypes = this.groupTopicsMap[groupTopicName]
+						data.multiArray.pop()
+						data.multiArray.push(groupTypes)
+						data.multiIndex[1] = 0;
+						break;
+					case 1:
+						break;
+				}
+				this.multiArray = data.multiArray;
+				this.multiIndex = data.multiIndex;
 			},
 		}
 	}

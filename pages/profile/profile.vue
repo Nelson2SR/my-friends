@@ -31,6 +31,26 @@
 				</view>
 			</view>
 		</view>
+		
+		<!-- my interest -->
+		<view class="cu-bar bg-white margin-top">
+			<view class="action">
+				<text class="cuIcon-title text-pink"></text> 我的爱好
+			</view>
+		</view>
+		
+		<!-- <view class="action text-gray add-action">
+			<button class="cu-btn cuIcon-add bg-gradual-blue shadow text-center" @click="createInterest"></button>
+		</view> -->
+		<view class="padding flex flex-direction">
+			<button class="cu-btn cuIcon-add bg-gradual-blue margin-tb-sm lg" @click="createInterest"></button>
+		</view>
+		
+		<view class="solids-bottom padding-xs flex align-center" >
+			<view class="flex-sub text-center">
+				<view class="solid-bottom text-df padding">你还添加任何爱好</view>
+			</view>
+		</view>
 
 		<!-- my groups module -->
 		<!-- #ifndef MP-ALIPAY -->
@@ -61,13 +81,6 @@
 			</view>
 		</view>
 		<!-- #endif -->
-
-		<!-- my interest -->
-		<view class="cu-bar bg-white margin-top">
-			<view class="action">
-				<text class="cuIcon-title text-pink"></text> 我的爱好
-			</view>
-		</view>
 
 		<cu-bar></cu-bar>
 	</view>

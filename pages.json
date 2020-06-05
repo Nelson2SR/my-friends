@@ -44,6 +44,10 @@
             "path" : "pages/post/post-create",
             "style" : {}
         }
+        ,{
+            "path" : "pages/groupTopic/groupTopic-view",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationStyle":"custom", //取消系统导航栏

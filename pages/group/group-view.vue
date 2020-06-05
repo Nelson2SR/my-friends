@@ -112,17 +112,22 @@
 					console.error("Error occur while retriving group detail.")
 				});
 
-			uniCloud.callFunction({
-				name: 'post-get-by-groupId',
-				data: {
-					groupId: options.id
-				}
-			}).then(res => {
-				console.log("posts detail: %s", JSON.stringify(res));
-				this.posts = res.result.data;
-			}).catch(err => {
-				console.error("Error retrieving posts")
-			})
+			if (this.isMember) {
+				uniCloud.callFunction({
+					name: 'post-get-by-groupId',
+					data: {
+						groupId: options.id
+					}
+				}).then(res => {
+					console.log("posts detail: %s", JSON.stringify(res));
+					this.posts = res.result.data;
+				}).catch(err => {
+					console.error("Error retrieving posts")
+				})
+			}
+		},
+		onReady() {
+			console.log('Page Ready')
 		},
 		onShow() {
 			console.log('Page shown')

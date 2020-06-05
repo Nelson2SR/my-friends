@@ -1,13 +1,13 @@
 <template>
-	<view class="cu-bar tabbar margin-bottom-xl bg-white">
-		<view class="action text-green">
+	<view class="cu-bar tabbar margin-top-sm bg-white">
+		<view class="action text-gray">
 			<view class="cuIcon-homefill" v-on:click="viewHome"></view> 首页
 		</view>
 		<view class="action text-gray">
-			<view class="cuIcon-similar"></view> 分类
+			<view class="cuIcon-similar" @click="exploreGroup"></view> 探索
 		</view>
 		<view class="action text-gray add-action">
-			<button class="cu-btn cuIcon-add bg-green shadow" @click="onCreateGroup"></button>
+			<button class="cu-btn cuIcon-add bg-gradual-blue shadow" @click="onCreateGroup"></button>
 			创建
 		</view>
 		<view class="action text-gray">
@@ -72,6 +72,11 @@
 						url: "/pages/group/group-create"
 					})
 				}
+			},
+			exploreGroup() {
+				uni.redirectTo({
+					url: "/pages/tabBar/explore/explore"
+				})
 			},
 			viewProfile() {
 				uni.redirectTo({

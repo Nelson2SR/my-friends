@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "cu-upload-file": "/colorui/components/cu-upload-file"
+  }
+}

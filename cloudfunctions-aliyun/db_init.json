@@ -21,5 +21,108 @@
 	},
 	"comment": {
 		
+	},
+	"groupTopic": {
+		// "data": [
+		// 	{
+		// 		"_id":"5ed45fc9433e82dcccb2fdbe",
+		// 		"name": "户外郊游"
+		// 	},
+		// 	{
+		// 		"_id":"5ed4f56b8183f724622cdbb9",
+		// 		"name":"技术"
+		// 	},
+		// 	{
+		// 		"_id":"5ed519966c221e66c7335aa1",
+		// 		"name":"家庭"
+		// 	},
+		// 	{
+		// 		"_id":"5ed5199b5e2ea71d79581d62",
+		// 		"name":"健康"
+		// 	},
+		// 	{
+		// 		"_id":"5ed519a1dcb3de22e8b534a4",
+		// 		"name":"运动健身"
+		// 	},
+		// 	{
+		// 		"_id":"5ed519a6d6ee6d83f1a7642b",
+		// 		"name":"学习"
+		// 	},
+		// 	{
+		// 		"_id":"5ed519abf06f9cd0673808f4",
+		// 		"name":"摄影"
+		// 	},
+		// 	{
+		// 		"_id":"5ed519b24f5c010efeb7f3f2",
+		// 		"name":"饮食"
+		// 	},
+		// 	{
+		// 		"_id":"5ed519b7a05ab1d4ed3465a3",
+		// 		"name":"语言文化"
+		// 	},
+		// 	{
+		// 		"_id":"5ed519bd670e64512e40be83",
+		// 		"name":"音乐"
+		// 	}
+		// ],
+		// "index":[{
+		// 	"IndexName":"groupTopicId",
+		// 	"MgokeySchema":{
+		// 		"MgoIndexKeys":[{
+		// 			"Name":"_id",
+		// 			"Direction":"1"
+		// 		}],
+		// 		"MgoIsUnique":false
+		// 	}
+		// }]
+	},
+	"groupType": {
+		"data":[
+			{
+			 	"_id":"5ed519c2c02064a3a39a0421",
+				"name":"徒步",
+				"groupTopicId":"5ed45fc9433e82dcccb2fdbe"
+			},
+			{
+			 	"_id":"5ed519cd61f6eddf40fd1af9",
+				"name":"露营",
+				"groupTopicId":"5ed45fc9433e82dcccb2fdbe"
+			},
+			{
+			 	"_id":"5ed519d64282471a8625d0c9",
+				"name":"Java",
+				"groupTopicId":"5ed4f56b8183f724622cdbb9"
+			},
+			{
+			 	"_id":"5ed519dc1ce41015f93165f6",
+				"name":"Python",
+				"groupTopicId":"5ed4f56b8183f724622cdbb9"
+			},
+			{
+			 	"_id":"5ed519e144f1af291ce054bc",
+				"name":"母亲",
+				"groupTopicId":"5ed519966c221e66c7335aa1"
+			},
+			{
+			 	"_id":"5ed519e57f1648f703391c14",
+				"name":"亲子",
+				"groupTopicId":"5ed519966c221e66c7335aa1"
+			},
+			{
+			 	"_id":"5ed519eb10da99fcc767d308",
+				"name":"足球",
+				"groupTopicId":"5ed519a1dcb3de22e8b534a4"
+			}
+		],
+		"index":[{
+			"IndexName":"groupTypeId",
+			"MgokeySchema":{
+				"MgoIndexKeys":[{
+					"Name":"_id",
+					"Direction":"1"
+				}],
+				"MgoIsUnique":false
+			}
+		}]
 	}
 }

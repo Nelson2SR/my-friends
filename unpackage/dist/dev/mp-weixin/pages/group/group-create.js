@@ -130,7 +130,18 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni, uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uniCloud, uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -273,11 +284,46 @@ var _vuex = __webpack_require__(/*! vuex */ 12); //
 //
 //
 //
-var graceChecker = __webpack_require__(/*! ../../common/graceChecker.js */ 55);var _self;var tempFilePaths;var cuUploadFile = function cuUploadFile() {__webpack_require__.e(/*! require.ensure | colorui/components/cu-upload-file */ "colorui/components/cu-upload-file").then((function () {return resolve(__webpack_require__(/*! @/colorui/components/cu-upload-file.vue */ 99));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default = { components: { cuUploadFile: cuUploadFile }, props: { showForm: { type: Boolean, default: true }, showLoading: { type: Boolean, default: false } }, data: function data() {return { "pickPic": "选择照片", imgList: [], region: ['广东省', '广州市', '海珠区'], joinMethod: "", visibility: "", description: "", showDialog: false };}, computed: (0, _vuex.mapState)(['openId', 'gender', 'avatarUrl']), onLoad: function onLoad(options) {console.log("landed on create-group page");console.log("OpenId: %s", this.openId);}, methods: { createGroup: function createGroup(e) {//定义表单规则
-      var rule = [{ name: "name", checkType: "string", checkRule: "1,10", errorMsg: "姓名应为1-10个字符" }, { name: "description", checkType: "string", checkRule: "1,50", errorMsg: "请控制为1-50个字符" }]; //进行表单检查
-      var formData = e.detail.value;console.log('form data:' + JSON.stringify(formData));var checkRes = graceChecker.check(formData, rule);if (checkRes && this.visibility !== undefined && this.joinMethod !== undefined) {uni.showToast({ title: "验证通过!", icon: "none" });this.showForm = false;this.showLoading = true;var data = e.detail.value;data.createdAt = new Date();data.createdBy = 1;data.visibility = this.visibility;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var graceChecker = __webpack_require__(/*! ../../common/graceChecker.js */ 55);var _self;var tempFilePaths;var cuUploadFile = function cuUploadFile() {__webpack_require__.e(/*! require.ensure | colorui/components/cu-upload-file */ "colorui/components/cu-upload-file").then((function () {return resolve(__webpack_require__(/*! @/colorui/components/cu-upload-file.vue */ 105));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default = { components: { cuUploadFile: cuUploadFile }, props: { showForm: { type: Boolean, default: true }, showLoading: { type: Boolean, default: false } }, data: function data() {return { "pickPic": "选择照片", imgList: [], region: ['广东省', '广州市', '海珠区'], joinMethod: "", visibility: "", description: "", showDialog: false, groupTopicsMap: {}, multiArray: [], multiIndex: [0, 0] };}, computed: (0, _vuex.mapState)(['openId', 'gender', 'avatarUrl']), onLoad: function onLoad(options) {var _this = this;console.log("landed on create-group page");console.log("OpenId: %s", this.openId);uniCloud.callFunction({ name: 'grouptopic-get', data: {} }).then(function (res) {console.log("Successfully retrieved group topics: %s", JSON.stringify(res));var groupTopicsData = res.result.data;var groupTopicsMap = {};var groupTopicNames = [];groupTopicsData.forEach(function (groupTopic) {groupTopicNames.push(groupTopic.name);var groupTypeNames = [];groupTopic.groupTypes.forEach(function (groupType) {groupTypeNames.push(groupType.name);});groupTopicsMap[groupTopic.name] = groupTypeNames;});console.log("groupTopics name map: %s", JSON.stringify(groupTopicsMap));_this.groupTopicsMap = groupTopicsMap; // let groupTopicName = groupTopicsMap.keys()
+      // console.log("first key: %s", groupTopicName.next().value)
+      // console.log("groupTopics name list and first groupTypes: %s - %s", JSON.stringify(groupTopicName), groupTopicsMap[groupTopicName[0]])
+      _this.multiArray.push(groupTopicNames);_this.multiArray.push(groupTopicsMap[groupTopicNames[0]]);}).catch(function (err) {console.log("Error occurs while retrieving group topics: %s", JSON.stringify(err));});}, methods: { createGroup: function createGroup(e) {//定义表单规则
+      var rule = [{ name: "name", checkType: "string", checkRule: "1,10", errorMsg: "姓名应为1-10个字符" }, { name: "description", checkType: "string", checkRule: "1,50", errorMsg: "请控制为1-50个字符" }];
+
+
+      //进行表单检查
+      var formData = e.detail.value;
+      console.log('form data:' + JSON.stringify(formData));
+      var checkRes = graceChecker.check(formData, rule);
+
+      if (checkRes && this.visibility !== undefined && this.joinMethod !== undefined) {
+        uni.showToast({
+          title: "验证通过!",
+          icon: "none" });
+
+        this.showForm = false;
+        this.showLoading = true;
+
+        var data = e.detail.value;
+        data.createdAt = new Date();
+        data.createdBy = 1;
+        data.visibility = this.visibility;
         data.joinMethod = this.joinMethod;
-        data.type = '游戏';
+        data.type = {
+          name: this.multiArray[1][this.multiIndex[1]],
+          groupTopic: this.multiArray[0][this.multiIndex[1]] };
+
         data.region = this.region;
         data.read = 0;
         data.vote = 0;
@@ -373,8 +419,32 @@ var graceChecker = __webpack_require__(/*! ../../common/graceChecker.js */ 55);v
     },
     onDescriptionInput: function onDescriptionInput(e) {
       this.description = e.detail.value;
+    },
+    MultiChange: function MultiChange(e) {
+      this.multiIndex = e.detail.value;
+    },
+    MultiColumnChange: function MultiColumnChange(e) {
+      var data = {
+        multiArray: this.multiArray,
+        multiIndex: this.multiIndex };
+
+      console.log("current picker data: %s - %s", JSON.stringify(data), JSON.stringify(e));
+      data.multiIndex[e.detail.column] = e.detail.value;
+      switch (e.detail.column) {
+        case 0:
+          var groupTopicName = this.multiArray[0][e.detail.value];
+          var groupTypes = this.groupTopicsMap[groupTopicName];
+          data.multiArray.pop();
+          data.multiArray.push(groupTypes);
+          data.multiIndex[1] = 0;
+          break;
+        case 1:
+          break;}
+
+      this.multiArray = data.multiArray;
+      this.multiIndex = data.multiIndex;
     } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 19)["default"]))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 19)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

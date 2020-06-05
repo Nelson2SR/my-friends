@@ -3,7 +3,7 @@
 		<view class="cu-item shadow">
 			<view class="image">
 				<image :src="item.imgUrl" mode="widthFix"></image>
-				<view class="cu-tag bg-blue" name="type">{{ item.type }}</view>
+				<view class="cu-tag bg-blue" name="type">{{ item.type.name }}</view>
 				<view class="cu-bar bg-shadeBottom"> <text class="text-cut" name="description">{{ item.description }}</text></view>
 			</view>
 			<view class="cu-list menu-avatar">
