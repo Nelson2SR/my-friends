@@ -4,7 +4,7 @@
 			<block slot="backText"></block>
 			<!-- <block slot="content">表单</block> -->
 		</cu-custom>
-
+		
 		<view class="bg-white padding">
 			<view class="grid margin-bottom text-center col-1">
 				<view class="basis-max bg-white margin-xs padding-sm radius group-name text-bold text-xl">{{item.name}}</view>
@@ -33,6 +33,12 @@
 			<view class="grid margin-bottom text-center col-1">
 				<view class="basis-max bg-white margin-xs padding-sm radius group-name">{{item.description}}</view>
 			</view>
+			
+			<view class="page-section page-section-gap" v-if="item.place != null">
+				<map style="width: 100%; height: 300px;" :latitude="item.place.latitude" :longitude="item.place.longitude" :covers="covers">
+				</map>
+			</view>
+			
 
 		</view>
 
@@ -74,7 +80,8 @@
 				menuBorder: false,
 				menuArrow: false,
 				menuCard: false,
-				isMember: false
+				isMember: false,
+				covers:[]
 			}
 		},
 		computed: mapState(['openId', 'gender', 'avatarUrl']),
@@ -98,8 +105,12 @@
 				.then(res => {
 					uni.hideLoading()
 					console.log("group detail: %s", JSON.stringify(res));
-					this.item = res.result.data[0];
-					this.item.members.forEach((member) => {
+					self.item = res.result[0];
+					console.log("result: %s", JSON.stringify(self.item))
+					if (self.item.place != null) {
+						self.getCovers(self.item.place)
+					}
+					self.item.members.forEach((member) => {
 						self.avatar.push(member.avatarUrl)
 						console.log("member openId: %s, this user openId: %s", member.openId, self.openId)
 						if (member.openId === self.openId) {
@@ -131,7 +142,7 @@
 		},
 		onShow() {
 			console.log('Page shown')
-			
+
 			uniCloud.callFunction({
 				name: 'post-get-by-groupId',
 				data: {
@@ -198,6 +209,14 @@
 					animationType: 'pop-in',
 					animationDuration: 200
 				})
+			},
+			getCovers(place) {
+				const cover = {
+					'longitude': place.longitude,
+					'latitude': place.latitude,
+					'iconPath': '../../static/location.png'
+				}
+				this.covers.push(cover)
 			}
 		}
 	}

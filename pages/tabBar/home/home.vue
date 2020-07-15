@@ -16,6 +16,21 @@
 			</view>
 		</view>
 		
+		<view class="recommended-groups">
+			<text>人气群组</text>
+			<cu-swiper :swiperList="myGroups" v-if="recommendedGroups.length > 0"></cu-swiper>
+		</view>
+		
+		<view class="nearby-groups">
+			<text>附近群组</text>
+			<cu-swiper :swiperList="nearbyGroups" v-if="nearbyGroups.length > 0"></cu-swiper>
+		</view>
+		
+		<view class="recommended-users">
+			<text>推荐用户</text>
+			<cu-swiper :swiperList="recommendedPeoples" v-if="recommendedPeoples.length > 0"></cu-swiper>
+		</view>
+		
 		<cu-bar></cu-bar>
 	</view>
 </template>
@@ -32,6 +47,9 @@
 			return {
 				CustomBar: this.CustomBar,
 				myGroups: [],
+				recommendedPeoples: [],
+				recommendedGroups: [],
+				nearbyGroups: [],
 				background: ['color1', 'color2', 'color3'],
 				indicatorDots: true,
 				autoplay: true,

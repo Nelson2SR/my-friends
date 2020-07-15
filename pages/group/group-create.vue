@@ -12,16 +12,22 @@
 				<textarea maxlength="-1" :disabled="modalName!=null" @input="onDescriptionInput" placeholder="群描述" name="description"></textarea>
 			</view>
 			<!-- #ifndef H5 || APP-PLUS || MP-ALIPAY -->
-			<view class="cu-form-group margin-top">
+			<!-- <view class="cu-form-group margin-top">
 				<view class="title">地址选择</view>
 				<picker mode="region" @change="RegionChange" :value="region">
 					<view class="picker">
 						{{region[0]}}，{{region[1]}}，{{region[2]}}
 					</view>
 				</picker>
-			</view>
+			</view> -->
 			<!-- #endif -->
-			
+
+			<view class="page-section page-section-gap" v-if="hasLocation">
+				<map style="width: 100%; height: 300px;" :latitude="location.latitude" :longitude="location.longitude" :covers="covers">
+				</map>
+			</view>
+			<button open-type="getUserInfo" v-on:click="chooseLocation" v-else>选择地址</button>
+
 			<!-- #ifndef MP-ALIPAY -->
 			<view class="cu-form-group">
 				<view class="title">类别选择</view>
@@ -32,9 +38,9 @@
 				</picker>
 			</view>
 			<!-- #endif -->
-			
+
 			<cu-upload-file v-on:addImage="addImage"></cu-upload-file>
-			
+
 			<view class="cu-bar bg-white margin-top solid-bottom">
 				<view class="action">
 					<text class="cuIcon-title text-orange"></text> 群隐私
@@ -54,7 +60,7 @@
 					<radio :class="visibility=='hidden'?'checked':''" :checked="visibility=='hidden'?true:false" value="hidden"></radio>
 				</view>
 			</radio-group>
-			
+
 			<view class="cu-bar bg-white margin-top solid-bottom">
 				<view class="action">
 					<text class="cuIcon-title text-orange"></text> 加入方式
@@ -67,7 +73,8 @@
 				</view>
 				<view class="cu-form-group">
 					<view class="title">Require Approval</view>
-					<radio :class="joinMethod=='requireApproval'?'checked':''" :checked="joinMethod=='requireApproval'?true:false" value="requireApproval"></radio>
+					<radio :class="joinMethod=='requireApproval'?'checked':''" :checked="joinMethod=='requireApproval'?true:false"
+					 value="requireApproval"></radio>
 				</view>
 			</radio-group>
 
@@ -82,13 +89,13 @@
 	var graceChecker = require("../../common/graceChecker.js");
 	var _self;
 	var tempFilePaths;
-	
+
 	import {
 		mapState
 	} from 'vuex'
-	
+
 	import cuUploadFile from '@/colorui/components/cu-upload-file.vue'
-	
+
 	export default {
 		components: {
 			cuUploadFile
@@ -114,19 +121,23 @@
 				showDialog: false,
 				groupTopicsMap: {},
 				multiArray: [
-					
+
 				],
 				multiIndex: [0, 0],
+				hasLocation: false,
+				location: {},
+				covers: [],
+				cover: {}
 			}
 		},
 		computed: mapState(['openId', 'gender', 'avatarUrl']),
-		
+
 		onLoad: function(options) {
 			console.log("landed on create-group page")
 			console.log("OpenId: %s", this.openId)
 			uniCloud.callFunction({
-				name:'grouptopic-get',
-				data:{}
+				name: 'grouptopic-get',
+				data: {}
 			}).then(res => {
 				console.log("Successfully retrieved group topics: %s", JSON.stringify(res))
 				const groupTopicsData = res.result.data
@@ -138,14 +149,11 @@
 					groupTopic.groupTypes.forEach(groupType => {
 						groupTypeNames.push(groupType.name)
 					})
-			
+
 					groupTopicsMap[groupTopic.name] = groupTypeNames
 				})
 				console.log("groupTopics name map: %s", JSON.stringify(groupTopicsMap))
 				this.groupTopicsMap = groupTopicsMap
-				// let groupTopicName = groupTopicsMap.keys()
-				// console.log("first key: %s", groupTopicName.next().value)
-				// console.log("groupTopics name list and first groupTypes: %s - %s", JSON.stringify(groupTopicName), groupTopicsMap[groupTopicName[0]])
 				this.multiArray.push(groupTopicNames)
 				this.multiArray.push(groupTopicsMap[groupTopicNames[0]])
 			}).catch(err => {
@@ -182,17 +190,25 @@
 					});
 					this.showForm = false;
 					this.showLoading = true;
-					
+
 					let data = e.detail.value;
 					data.createdAt = new Date();
 					data.createdBy = 1;
 					data.visibility = this.visibility;
 					data.joinMethod = this.joinMethod;
 					data.type = {
-						name:this.multiArray[1][this.multiIndex[1]],
-						groupTopic:this.multiArray[0][this.multiIndex[1]]
+						name: this.multiArray[1][this.multiIndex[1]],
+						groupTopic: this.multiArray[0][this.multiIndex[1]]
 					};
-					data.region = this.region;
+					if (this.location.length != 0) {
+						data.place = {
+							'longitude': this.location.longitude,
+							'latitude': this.location.latitude,
+							'name': this.location.name,
+							'address': this.address
+						};
+					}
+
 					data.read = 0;
 					data.vote = 0;
 					data.comment = 0;
@@ -208,6 +224,7 @@
 
 					uniCloud.uploadFile({
 						filePath: this.imgList[0],
+						cloudPath: '/groupPic/'+ 'a.png',
 						onUploadProgress: function(progressEvent) {
 							// console.log(progressEvent);
 							var percentCompleted = Math.round(
@@ -300,7 +317,7 @@
 				data.multiIndex[e.detail.column] = e.detail.value;
 				switch (e.detail.column) {
 					case 0:
-					    let groupTopicName = this.multiArray[0][e.detail.value]
+						let groupTopicName = this.multiArray[0][e.detail.value]
 						let groupTypes = this.groupTopicsMap[groupTopicName]
 						data.multiArray.pop()
 						data.multiArray.push(groupTypes)
@@ -312,6 +329,41 @@
 				this.multiArray = data.multiArray;
 				this.multiIndex = data.multiIndex;
 			},
+			chooseLocation() {
+				console.log('start to choose location')
+				let self = this
+				uni.chooseLocation({
+					success: (res) => {
+						console.log('location response: %s', JSON.stringify(res))
+						self.hasLocation = true,
+							self.location['longitude'] = res.longitude,
+							self.location['latitude'] = res.latitude,
+							self.location['name'] = res.name,
+							self.location['address'] = res.address,
+							self.cover['longitude'] = res.longitude,
+							self.cover['latitude'] = res.latitude,
+							self.cover['iconPath'] = '../../static/location.png'
+						self.covers.push(self.cover)
+					},
+					fail: (err) => {
+						console.log('error: %s', JSON.stringify(err))
+						uni.authorize({
+							scope: 'scope.userLocation',
+							success() {
+								uni.getLocation({
+									type: 'wgs84',
+									success: function(res) {
+										console.log('location response: %s', JSON.stringify(res))
+										console.log('当前位置的经度：' + res.longitude);
+										console.log('当前位置的纬度：' + res.latitude);
+									}
+								})
+							}
+						})
+					}
+				})
+				console.log('the location: %s', JSON.stringify(this.location))
+			}
 		}
 	}
 </script>
@@ -320,7 +372,7 @@
 	.cu-form-group .title {
 		min-width: calc(4em + 15px);
 	}
-	
+
 	. {
 		width: 100%;
 		height: 200rpx;

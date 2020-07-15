@@ -73,7 +73,7 @@ var component = Object(_Applications_HBuilderX_app_Contents_HBuilderX_plugins_un
   renderjs
 )
 
-component.options.__file = "Users/surong/Project/HBuilderProject/MyFriends/App.vue"
+component.options.__file = "App.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
