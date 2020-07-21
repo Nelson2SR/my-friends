@@ -86,6 +86,7 @@
 					const self = this;
 					this.imgList.forEach(img => {
 						uniCloud.uploadFile({
+							cloudPath: '/postPic/'+ Date.now() + '.png',
 							filePath: img,
 							onUploadProgress: function(progressEvent) {
 								// console.log(progressEvent);

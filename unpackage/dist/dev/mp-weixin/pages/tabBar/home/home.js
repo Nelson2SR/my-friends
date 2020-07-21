@@ -175,6 +175,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
 var _vuex = __webpack_require__(/*! vuex */ 12); //
 //
 //
@@ -212,39 +219,71 @@ var _vuex = __webpack_require__(/*! vuex */ 12); //
 //
 //
 //
-var _default = { components: {}, computed: (0, _vuex.mapState)(['forcedLogin', 'hasLogin', 'userName', 'avatarUrl', 'gender', 'openId']), data: function data() {return { CustomBar: this.CustomBar, myGroups: [], recommendedPeoples: [], recommendedGroups: [], nearbyGroups: [], background: ['color1', 'color2', 'color3'], indicatorDots: true, autoplay: true, interval: 2000, duration: 500, items: ['ALL', 'GOING', 'SAVED', 'PAST'], styles: [{ value: 'button', text: '按钮', checked: true }, { value: 'text', text: '文字' }], colors: ['#007aff', '#4cd964', '#dd524d'], current: 0, colorIndex: 0, activeColor: '#007aff', styleType: 'button' };}, methods: {
-    onClickItem: function onClickItem(e) {
-      if (this.current !== e.currentIndex) {
-        this.current = e.currentIndex;
-      }
-    },
+//
+//
+//
+//
+//
+//
+//
+var _default = { components: {}, computed: (0, _vuex.mapState)(['forcedLogin', 'hasLogin', 'userName', 'avatarUrl', 'gender', 'openId']), data: function data() {return { CustomBar: this.CustomBar, myGroups: [], recommendedPeoples: [], recommendedGroups: [], nearbyGroups: [], background: ['color1', 'color2', 'color3'], indicatorDots: true, autoplay: true, interval: 2000, duration: 500, items: ['ALL', 'GOING', 'SAVED', 'PAST'], styles: [{ value: 'button', text: '按钮', checked: true }, { value: 'text', text: '文字' }], colors: ['#007aff', '#4cd964', '#dd524d'], current: 0, colorIndex: 0, activeColor: '#007aff', styleType: 'button' };}, methods: { onClickItem: function onClickItem(e) {if (this.current !== e.currentIndex) {this.current = e.currentIndex;}},
     searchIcon: function searchIcon(e) {
-      // let key = e.detail.value.toLowerCase();
-      // let list = this.myGroups;
-      // for (let i = 0; i < list.length; i++) {
-      // 	let a = key;
-      // 	let b = list[i].name.toLowerCase();
-      // 	if (b.search(a) != -1) {
-      // 		list[i].isShow = true
-      // 	} else {
-      // 		list[i].isShow = false
-      // 	}
-      // }
-      // this.cuIcon = list
+
+    },
+    getNearbyGroups: function getNearbyGroups() {
+      return new Promise(function (resolve, reject) {
+        uniCloud.callFunction({
+          name: 'group-get-by-distance',
+          data: {
+            "longitude": 113.297039,
+            "latitude": 23.091151,
+            "radius": "100",
+            "units": "km",
+            "number": 100 } }).
+
+
+        then(function (res) {
+          console.log('My nearby Groups: %s', JSON.stringify(res));
+          resolve(res.result.data);
+        }).
+        catch(function (err) {
+          console.log(err);
+          reject(err);
+        });
+
+      });
+    },
+    getMyGroups: function getMyGroups() {
+      return new Promise(function (resolve, reject) {
+        uniCloud.callFunction({
+          name: 'group-get-by-pageId',
+          data: {
+            pageId: 1 } }).
+
+
+        then(function (res) {
+          console.log('My Groups: %s', JSON.stringify(res));
+          resolve(res.result.data);
+        }).
+        catch(function (err) {
+          console.log(err);
+          reject(err);
+        });
+
+      });
     } },
 
   onLoad: function onLoad() {var _this = this;
     console.log('Page onLoad' + this.openId);
 
-    uniCloud.callFunction({
-      name: 'group-get-by-pageId',
-      data: {
-        pageId: 1 } }).
-
-
-    then(function (res) {
-      console.log('My Groups: %s', JSON.stringify(res));
-      _this.myGroups = res.result.data;
+    Promise.all([this.getNearbyGroups(), this.getMyGroups()]).
+    then(function (value) {
+      console.log("Group data: %s", JSON.stringify(value));
+      _this.nearbyGroups = value[0];
+      _this.myGroups = value[1];
+    }).
+    catch(function (err) {
+      console.log(err);
     });
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 19)["default"]))

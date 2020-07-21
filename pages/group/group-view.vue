@@ -105,7 +105,7 @@
 				.then(res => {
 					uni.hideLoading()
 					console.log("group detail: %s", JSON.stringify(res));
-					self.item = res.result[0];
+					self.item = res.result.data;
 					console.log("result: %s", JSON.stringify(self.item))
 					if (self.item.place != null) {
 						self.getCovers(self.item.place)

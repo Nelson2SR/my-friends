@@ -216,6 +216,7 @@ var cuUploadFile = function cuUploadFile() {__webpack_require__.e(/*! require.en
         var self = this;
         this.imgList.forEach(function (img) {
           uniCloud.uploadFile({
+            cloudPath: '/postPic/' + Date.now() + '.png',
             filePath: img,
             onUploadProgress: function onUploadProgress(progressEvent) {
               // console.log(progressEvent);

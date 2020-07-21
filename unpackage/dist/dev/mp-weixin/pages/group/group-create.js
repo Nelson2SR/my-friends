@@ -333,7 +333,7 @@ var graceChecker = __webpack_require__(/*! ../../common/graceChecker.js */ 55);v
           groupTopic: this.multiArray[0][this.multiIndex[1]] };
 
         if (this.location.length != 0) {
-          data.place = {
+          data.location = {
             'longitude': this.location.longitude,
             'latitude': this.location.latitude,
             'name': this.location.name,
@@ -356,7 +356,7 @@ var graceChecker = __webpack_require__(/*! ../../common/graceChecker.js */ 55);v
 
         uniCloud.uploadFile({
           filePath: this.imgList[0],
-          cloudPath: '/groupPic/' + 'a.png',
+          cloudPath: '/groupPic/' + Date.now() + '.png',
           onUploadProgress: function onUploadProgress(progressEvent) {
             // console.log(progressEvent);
             var percentCompleted = Math.round(

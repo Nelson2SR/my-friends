@@ -201,7 +201,7 @@
 						groupTopic: this.multiArray[0][this.multiIndex[1]]
 					};
 					if (this.location.length != 0) {
-						data.place = {
+						data.location = {
 							'longitude': this.location.longitude,
 							'latitude': this.location.latitude,
 							'name': this.location.name,
@@ -224,7 +224,7 @@
 
 					uniCloud.uploadFile({
 						filePath: this.imgList[0],
-						cloudPath: '/groupPic/'+ 'a.png',
+						cloudPath: '/groupPic/'+ Date.now() + '.png',
 						onUploadProgress: function(progressEvent) {
 							// console.log(progressEvent);
 							var percentCompleted = Math.round(

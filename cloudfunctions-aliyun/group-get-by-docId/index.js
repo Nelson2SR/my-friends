@@ -1,8 +1,12 @@
+/**
+ * Retrieve group by group id
+ * 
+ * @param {String}  = [groupId] 
+ */
 'use strict';
 const db = uniCloud.database()
-const { RedisService } = require('utils')
+const { RedisService, AbstractResponse } = require('utils')
 const redisService = new RedisService()
-
 
 exports.main = async (event, context) => {
 		const groupKey = "mf:group:"+event.id
@@ -15,10 +19,10 @@ exports.main = async (event, context) => {
 			const res = await collection.doc(event.id).get();
 			console.log("retrieved group : %s", JSON.stringify(res))
 			await redisService.postObject(groupKey, JSON.stringify(res.data))
-			return res.data
+			return new AbstractResponse(200, res.data[0], null)
 		}
 		else {
 			console.log("Retrieve group from redis")
-			return JSON.parse(group)
+			return new AbstractResponse(200, JSON.parse(group), null)
 		}
 };

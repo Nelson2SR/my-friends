@@ -8,7 +8,19 @@
 		
 	},
 	"group": {
-		
+		"data": [ // 数据
+		         
+		        ],
+		"index": [{ // 索引
+		            "IndexName": "index_location", // 索引名称
+		            "MgoKeySchema": { // 索引规则
+		                "MgoIndexKeys": [{
+		                    "Name": "location", // 索引字段
+		                    "Direction": "1" // 索引方向，1：ASC-升序，-1：DESC-降序，2dsphere：地理位置
+		                }],
+		                "MgoIsUnique": false // 索引是否唯一
+		            }
+		        }]
 	},
 	"user": {
 		
@@ -23,48 +35,48 @@
 		
 	},
 	"groupTopic": {
-		// "data": [
-		// 	{
-		// 		"_id":"5ed45fc9433e82dcccb2fdbe",
-		// 		"name": "户外郊游"
-		// 	},
-		// 	{
-		// 		"_id":"5ed4f56b8183f724622cdbb9",
-		// 		"name":"技术"
-		// 	},
-		// 	{
-		// 		"_id":"5ed519966c221e66c7335aa1",
-		// 		"name":"家庭"
-		// 	},
-		// 	{
-		// 		"_id":"5ed5199b5e2ea71d79581d62",
-		// 		"name":"健康"
-		// 	},
-		// 	{
-		// 		"_id":"5ed519a1dcb3de22e8b534a4",
-		// 		"name":"运动健身"
-		// 	},
-		// 	{
-		// 		"_id":"5ed519a6d6ee6d83f1a7642b",
-		// 		"name":"学习"
-		// 	},
-		// 	{
-		// 		"_id":"5ed519abf06f9cd0673808f4",
-		// 		"name":"摄影"
-		// 	},
-		// 	{
-		// 		"_id":"5ed519b24f5c010efeb7f3f2",
-		// 		"name":"饮食"
-		// 	},
-		// 	{
-		// 		"_id":"5ed519b7a05ab1d4ed3465a3",
-		// 		"name":"语言文化"
-		// 	},
-		// 	{
-		// 		"_id":"5ed519bd670e64512e40be83",
-		// 		"name":"音乐"
-		// 	}
-		// ],
+		"data": [
+			{
+				"_id":"5ed45fc9433e82dcccb2fdbe",
+				"name": "户外郊游"
+			},
+			{
+				"_id":"5ed4f56b8183f724622cdbb9",
+				"name":"技术"
+			},
+			{
+				"_id":"5ed519966c221e66c7335aa1",
+				"name":"家庭"
+			},
+			{
+				"_id":"5ed5199b5e2ea71d79581d62",
+				"name":"健康"
+			},
+			{
+				"_id":"5ed519a1dcb3de22e8b534a4",
+				"name":"运动健身"
+			},
+			{
+				"_id":"5ed519a6d6ee6d83f1a7642b",
+				"name":"学习"
+			},
+			{
+				"_id":"5ed519abf06f9cd0673808f4",
+				"name":"摄影"
+			},
+			{
+				"_id":"5ed519b24f5c010efeb7f3f2",
+				"name":"饮食"
+			},
+			{
+				"_id":"5ed519b7a05ab1d4ed3465a3",
+				"name":"语言文化"
+			},
+			{
+				"_id":"5ed519bd670e64512e40be83",
+				"name":"音乐"
+			}
+		]
 		// "index":[{
 		// 	"IndexName":"groupTopicId",
 		// 	"MgokeySchema":{
@@ -113,16 +125,16 @@
 				"name":"足球",
 				"groupTopicId":"5ed519a1dcb3de22e8b534a4"
 			}
-		],
-		"index":[{
-			"IndexName":"groupTypeId",
-			"MgokeySchema":{
-				"MgoIndexKeys":[{
-					"Name":"_id",
-					"Direction":"1"
-				}],
-				"MgoIsUnique":false
-			}
-		}]
+		]
+		// "index":[{
+		// 	"IndexName":"groupTypeId",
+		// 	"MgokeySchema":{
+		// 		"MgoIndexKeys":[{
+		// 			"Name":"_id",
+		// 			"Direction":"1"
+		// 		}],
+		// 		"MgoIsUnique":false
+		// 	}
+		// }]
 	}
 }

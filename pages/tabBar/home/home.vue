@@ -9,35 +9,44 @@
 				<input type="text" placeholder="搜索group" confirm-type="search" @input="searchIcon"></input>
 			</view>
 		</view>
-		
+
 		<view class="example-box">
 			<view class="group-list" v-for="(group, key) in myGroups" :key="key">
 				<cu-card :item="group"></cu-card>
 			</view>
 		</view>
-		
+
 		<view class="recommended-groups">
 			<text>人气群组</text>
 			<cu-swiper :swiperList="myGroups" v-if="recommendedGroups.length > 0"></cu-swiper>
 		</view>
 		
-		<view class="nearby-groups">
+		<view class="example-box">
+			<text>附近群组</text>
+			<view class="group-list" v-for="(group, key) in nearbyGroups" :key="key" v-if="nearbyGroups.length > 0">
+				<cu-card :item="group"></cu-card>
+			</view>
+		</view>
+
+		<!-- <view class="nearby-groups">
 			<text>附近群组</text>
 			<cu-swiper :swiperList="nearbyGroups" v-if="nearbyGroups.length > 0"></cu-swiper>
-		</view>
-		
-		<view class="recommended-users">
+		</view> -->
+
+		<!-- <view class="recommended-users">
 			<text>推荐用户</text>
 			<cu-swiper :swiperList="recommendedPeoples" v-if="recommendedPeoples.length > 0"></cu-swiper>
 		</view>
-		
+ -->
 		<cu-bar></cu-bar>
 	</view>
 </template>
 
 <script>
-	import { mapState } from 'vuex'
-	
+	import {
+		mapState
+	} from 'vuex'
+
 	export default {
 		components: {
 
@@ -80,33 +89,63 @@
 				}
 			},
 			searchIcon(e) {
-				// let key = e.detail.value.toLowerCase();
-				// let list = this.myGroups;
-				// for (let i = 0; i < list.length; i++) {
-				// 	let a = key;
-				// 	let b = list[i].name.toLowerCase();
-				// 	if (b.search(a) != -1) {
-				// 		list[i].isShow = true
-				// 	} else {
-				// 		list[i].isShow = false
-				// 	}
-				// }
-				// this.cuIcon = list
+
+			},
+			getNearbyGroups() {
+				return new Promise((resolve, reject) => {
+					uniCloud.callFunction({
+							name: 'group-get-by-distance',
+							data: {
+								"longitude": 113.297039,
+								"latitude": 23.091151,
+								"radius": "100",
+								"units": "km",
+								"number": 100
+							}
+						})
+						.then(res => {
+							console.log('My nearby Groups: %s', JSON.stringify(res))
+							resolve(res.result.data)
+						})
+						.catch(err => {
+							console.log(err)
+							reject(err)
+						});
+					
+				})
+			},
+			getMyGroups() {
+				return new Promise((resolve, reject) => {
+					uniCloud.callFunction({
+							name: 'group-get-by-pageId',
+							data: {
+								pageId: 1
+							}
+						})
+						.then(res => {
+							console.log('My Groups: %s', JSON.stringify(res))
+							resolve(res.result.data)
+						})
+						.catch(err => {
+							console.log(err)
+							reject(err)
+						});
+					
+				})
 			}
 		},
 		onLoad: function() {
 			console.log('Page onLoad' + this.openId);
 			
-			uniCloud.callFunction({
-					name: 'group-get-by-pageId',
-					data: {
-						pageId: 1
-					}
+			Promise.all([this.getNearbyGroups(), this.getMyGroups()])
+				.then(value => {
+					console.log("Group data: %s", JSON.stringify(value))
+					this.nearbyGroups = value[0]
+					this.myGroups = value[1]
 				})
-				.then(res => {
-					console.log('My Groups: %s', JSON.stringify(res))
-					this.myGroups = res.result.data;
-				});
+				.catch(err => {
+					console.log(err)
+				})
 		}
 	}
 </script>
@@ -164,7 +203,7 @@
 		font-size: 30rpx;
 		color: #666;
 	}
-	
+
 	page {
 		padding-top: 50px;
 	}
