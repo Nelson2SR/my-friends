@@ -25,6 +25,10 @@
 			<view class="padding flex flex-direction" v-else>
 				<button class="cu-btn bg-blue margin-tb-sm lg" @click="joinGroup(item)">Join</button>
 			</view>
+			
+			<view class="padding flex flex-direction" v-if="isMember">
+				<image :src="item.qrCodeUrl" mode=""></image>
+			</view>
 
 			<!-- <view class="grid margin-bottom text-center col-1 justify-center">
 				<button type="default" class="cu-btn round lines-blue shadow" @click="inviteFriend(item)">Invite</button>
@@ -99,7 +103,8 @@
 			uniCloud.callFunction({
 					name: 'group-get-by-docId',
 					data: {
-						id: options.id
+						id: options.id,
+						userId: self.openId
 					}
 				})
 				.then(res => {
@@ -107,8 +112,8 @@
 					console.log("group detail: %s", JSON.stringify(res));
 					self.item = res.result.data;
 					console.log("result: %s", JSON.stringify(self.item))
-					if (self.item.place != null) {
-						self.getCovers(self.item.place)
+					if (self.item.location != null) {
+						self.getCovers(self.item.location)
 					}
 					self.item.members.forEach((member) => {
 						self.avatar.push(member.avatarUrl)
@@ -120,7 +125,7 @@
 				})
 				.catch(err => {
 					uni.hideLoading()
-					console.error("Error occur while retriving group detail.")
+					console.error("Error occur while retriving group detail. %s", err)
 				});
 
 			if (this.isMember) {
@@ -210,13 +215,16 @@
 					animationDuration: 200
 				})
 			},
-			getCovers(place) {
+			getCovers(location) {
 				const cover = {
-					'longitude': place.longitude,
-					'latitude': place.latitude,
+					'longitude': location.longitude,
+					'latitude': location.latitude,
 					'iconPath': '../../static/location.png'
 				}
 				this.covers.push(cover)
+			},
+			updateViewGroup() {
+				
 			}
 		}
 	}

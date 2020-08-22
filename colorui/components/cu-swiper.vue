@@ -5,8 +5,11 @@
 		 indicator-active-color="#0081ff">
 			<swiper-item v-for="(item,index) in swiperList" :key="index" :class="cardCur==index?'cur':''">
 				<view class="swiper-item" @click="viewGroup(item)">
-					<image :src="item.imgUrl" mode="aspectFill"></image>
+					<cu-card :item="item"></cu-card>
+					<!-- <image :src="item.imgUrl" mode="aspectFill"></image> -->
 				</view>
+<!-- 				<button type="default">加入</button>
+ -->				
 			</swiper-item>
 		</swiper>
 	</view>

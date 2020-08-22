@@ -3,7 +3,7 @@
 		<!-- text editor -->
 		<view class="cu-bar bg-white margin-top">
 			<view class="action">
-				图片上传
+				{{text}}
 			</view>
 			<view class="action">
 				{{imgList.length}}/4
@@ -34,6 +34,16 @@
 				textareaValue: '',
 			}
 		},
+		props:{
+			text: {
+				type: String,
+				default: '选择图片'
+			},
+			type: {
+				type: String,
+				default: 'groupPic'
+			}
+		},
 		methods:{
 			ChooseImage() {
 				uni.chooseImage({
@@ -46,7 +56,12 @@
 						} else {
 							this.imgList = res.tempFilePaths
 						}
-						this.$emit('addImage', this.imgList)
+						if (this.type === 'groupPic') {
+							this.$emit('addImage', this.imgList)
+						}
+						else if (this.type === 'qrCodePic') {
+							this.$emit('addQRCode', this.imgList)
+						}
 					},
 				});
 			},

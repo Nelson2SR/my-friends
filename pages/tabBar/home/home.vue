@@ -11,16 +11,17 @@
 		</view>
 
 		<view class="example-box">
-			<view class="group-list" v-for="(group, key) in myGroups" :key="key">
+			<text>人气群组</text>
+			<view class="group-list" v-for="(group, key) in popularGroups" :key="key">
 				<cu-card :item="group"></cu-card>
 			</view>
 		</view>
 
-		<view class="recommended-groups">
+		<!-- <view class="recommended-groups">
 			<text>人气群组</text>
-			<cu-swiper :swiperList="myGroups" v-if="recommendedGroups.length > 0"></cu-swiper>
+			<cu-swiper :swiperList="popularGroups" v-if="recommendedGroups.length > 0"></cu-swiper>
 		</view>
-		
+		 -->
 		<view class="example-box">
 			<text>附近群组</text>
 			<view class="group-list" v-for="(group, key) in nearbyGroups" :key="key" v-if="nearbyGroups.length > 0">
@@ -55,7 +56,7 @@
 		data() {
 			return {
 				CustomBar: this.CustomBar,
-				myGroups: [],
+				popularGroups: [],
 				recommendedPeoples: [],
 				recommendedGroups: [],
 				nearbyGroups: [],
@@ -96,8 +97,8 @@
 					uniCloud.callFunction({
 							name: 'group-get-by-distance',
 							data: {
-								"longitude": 113.297039,
-								"latitude": 23.091151,
+								"longitude": 113,
+								"latitude": 23,
 								"radius": "100",
 								"units": "km",
 								"number": 100
@@ -114,12 +115,13 @@
 					
 				})
 			},
-			getMyGroups() {
+			getPopularGroups() {
 				return new Promise((resolve, reject) => {
 					uniCloud.callFunction({
-							name: 'group-get-by-pageId',
+							name: 'groups-get-by-score',
 							data: {
-								pageId: 1
+								maxNum: 20,
+								minNum: 0
 							}
 						})
 						.then(res => {
@@ -136,12 +138,14 @@
 		},
 		onLoad: function() {
 			console.log('Page onLoad' + this.openId);
+			let getPopularGroups = this.getPopularGroups().catch(e => e)
+			let getNearbyGroups = this.getNearbyGroups().catch(e => e)
 			
-			Promise.all([this.getNearbyGroups(), this.getMyGroups()])
+			Promise.all([getNearbyGroups, getPopularGroups])
 				.then(value => {
 					console.log("Group data: %s", JSON.stringify(value))
 					this.nearbyGroups = value[0]
-					this.myGroups = value[1]
+					this.popularGroups = value[1]
 				})
 				.catch(err => {
 					console.log(err)

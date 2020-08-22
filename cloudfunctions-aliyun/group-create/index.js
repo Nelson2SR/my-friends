@@ -18,7 +18,7 @@ exports.main = async (event, context) => {
 	const locationKey = 'mf:group:geo'
 	const name = 'group:geo:'+ result.id
 	const geoAddResult = await redisService.geoAdd(locationKey, event.location.longitude, event.location.latitude, name)
-	if ( geoAddResult != 1) {
+	if ( geoAddResult != 1) { 
 		console.warn('Add group geometry failed for group id %s', result.id)
 	}
 	

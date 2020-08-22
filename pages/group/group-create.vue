@@ -39,7 +39,8 @@
 			</view>
 			<!-- #endif -->
 
-			<cu-upload-file v-on:addImage="addImage"></cu-upload-file>
+			<cu-upload-file v-on:addImage="addImage" :text="groupPicText" :type="groupPicType"></cu-upload-file>
+			<cu-upload-file v-on:addQRCode="addQRCode" :text="qrCodeText" :type="qrCodeType"></cu-upload-file>
 
 			<view class="cu-bar bg-white margin-top solid-bottom">
 				<view class="action">
@@ -113,7 +114,12 @@
 		data() {
 			return {
 				"pickPic": "选择照片",
+				"groupPicText": "群封面",
+				"qrCodeText": "QR Code",
+				"groupPicType": "groupPic",
+				"qrCodeType": "qrCodePic",
 				imgList: [],
+				qrCodeList: [],
 				region: ['广东省', '广州市', '海珠区'],
 				joinMethod: "",
 				visibility: "",
@@ -161,7 +167,7 @@
 			})
 		},
 		methods: {
-			createGroup: function(e) {
+			createGroup: async function(e) {
 
 				//定义表单规则
 				const rule = [{
@@ -222,38 +228,43 @@
 					data.admins = [owner];
 					console.log('create group for data: ' + JSON.stringify(data));
 
-					uniCloud.uploadFile({
+					let imgUploadResult = await uniCloud.uploadFile({
 						filePath: this.imgList[0],
-						cloudPath: '/groupPic/'+ Date.now() + '.png',
+						cloudPath: '/groupPic/' + Date.now() + '.png',
 						onUploadProgress: function(progressEvent) {
 							// console.log(progressEvent);
 							var percentCompleted = Math.round(
 								(progressEvent.loaded * 100) / progressEvent.total
 							);
-						},
-						success(res) {
-							console.log("successfully upload img " + res.fileID)
-							data.imgUrl = res.fileID;
-
-							uniCloud.callFunction({
-									name: 'group-create',
-									data: data
-								})
-								.then(res => {
-									console.log("success with" + JSON.stringify(res));
-									uni.redirectTo({
-										url: 'group-view?id=' + res.result.id
-									});
-								});
-
-						},
-						fail(err) {
-							console.error(err)
-						},
-						complete() {
-							console.log("completed")
 						}
 					});
+
+
+					let qrCodeUploadResult = await uniCloud.uploadFile({
+						filePath: this.qrCodeList[0],
+						cloudPath: '/groupPic/' + Date.now() + '.png',
+						onUploadProgress: function(progressEvent) {
+							// console.log(progressEvent);
+							var percentCompleted = Math.round(
+								(progressEvent.loaded * 100) / progressEvent.total
+							);
+						}
+					})
+
+					data.imgUrl = imgUploadResult.fileID;
+					data.qrCodeUrl = qrCodeUploadResult.fileID;
+
+					uniCloud.callFunction({
+							name: 'group-create',
+							data: data
+						})
+						.then(res => {
+							console.log("success with" + JSON.stringify(res));
+							uni.redirectTo({
+								url: 'group-view?id=' + res.result.id
+							});
+						});
+
 				} else {
 					uni.showToast({
 						title: graceChecker.error,
@@ -273,6 +284,20 @@
 					}
 				});
 			},
+
+			// uploadFile (filePath, cloudPath) {
+			// 		return await uniCloud.uploadFile({
+			// 				filePath: filePath,
+			// 				cloudPath: cloudPath,
+			// 				onUploadProgress: function(progressEvent) {
+			// 					// console.log(progressEvent);
+			// 					var percentCompleted = Math.round(
+			// 						(progressEvent.loaded * 100) / progressEvent.total
+			// 					);
+			// 				}
+			// 			});
+			// 		}
+			// },
 			clickVisibilityCard(e) {
 				visibility = e;
 
@@ -292,6 +317,10 @@
 			addImage(e) {
 				console.log('Add image: %s', e)
 				this.imgList = e;
+			},
+			addQRCode(e) {
+				console.log('Add QR Code: %s', e)
+				this.qrCodeList = e;
 			},
 			RegionChange(e) {
 				this.region = e.detail.value

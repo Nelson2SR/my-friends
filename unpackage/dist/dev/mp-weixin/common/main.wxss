@@ -2510,6 +2510,7 @@ swiper.round-dot .uni-swiper-dot.uni-swiper-dot-active {
 }
 .card-swiper swiper-item {
 	width: 610rpx !important;
+	height: 100%;
 	left: 70rpx;
 	box-sizing: border-box;
 	padding: 40rpx 0rpx 70rpx;

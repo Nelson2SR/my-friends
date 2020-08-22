@@ -19,10 +19,24 @@ exports.main = async (event, context) => {
 			const res = await collection.doc(event.id).get();
 			console.log("retrieved group : %s", JSON.stringify(res))
 			await redisService.postObject(groupKey, JSON.stringify(res.data))
+			
+			if ( event.userId != null ){
+				await updateGroupView( event.id, event.userId )
+			}
 			return new AbstractResponse(200, res.data[0], null)
 		}
 		else {
-			console.log("Retrieve group from redis")
-			return new AbstractResponse(200, JSON.parse(group), null)
+			console.log("Retrieve group from redis for group %s", event.id)
+			if ( event.userId != null ){
+				await updateGroupView( event.id, event.userId )
+			}
+			console.log("Return group data: %s", JSON.stringify(group))
+			return new AbstractResponse(200, JSON.parse(group)[0], null)
 		}
 };
+
+async function updateGroupView(groupId, userId) {
+	console.log('groupId %s and userId %s', groupId, userId)
+	let updateViewResult = await redisService.updateGroupView( groupId, userId )
+	console.log('Update Group %s view result %s', groupId, JSON.stringify(updateViewResult))
+}

@@ -182,6 +182,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _vuex = __webpack_require__(/*! vuex */ 12); //
 //
 //
@@ -226,8 +227,8 @@ var _vuex = __webpack_require__(/*! vuex */ 12); //
 //
 //
 //
-var _default = { components: {}, computed: (0, _vuex.mapState)(['forcedLogin', 'hasLogin', 'userName', 'avatarUrl', 'gender', 'openId']), data: function data() {return { CustomBar: this.CustomBar, myGroups: [], recommendedPeoples: [], recommendedGroups: [], nearbyGroups: [], background: ['color1', 'color2', 'color3'], indicatorDots: true, autoplay: true, interval: 2000, duration: 500, items: ['ALL', 'GOING', 'SAVED', 'PAST'], styles: [{ value: 'button', text: '按钮', checked: true }, { value: 'text', text: '文字' }], colors: ['#007aff', '#4cd964', '#dd524d'], current: 0, colorIndex: 0, activeColor: '#007aff', styleType: 'button' };}, methods: { onClickItem: function onClickItem(e) {if (this.current !== e.currentIndex) {this.current = e.currentIndex;}},
-    searchIcon: function searchIcon(e) {
+//
+var _default = { components: {}, computed: (0, _vuex.mapState)(['forcedLogin', 'hasLogin', 'userName', 'avatarUrl', 'gender', 'openId']), data: function data() {return { CustomBar: this.CustomBar, popularGroups: [], recommendedPeoples: [], recommendedGroups: [], nearbyGroups: [], background: ['color1', 'color2', 'color3'], indicatorDots: true, autoplay: true, interval: 2000, duration: 500, items: ['ALL', 'GOING', 'SAVED', 'PAST'], styles: [{ value: 'button', text: '按钮', checked: true }, { value: 'text', text: '文字' }], colors: ['#007aff', '#4cd964', '#dd524d'], current: 0, colorIndex: 0, activeColor: '#007aff', styleType: 'button' };}, methods: { onClickItem: function onClickItem(e) {if (this.current !== e.currentIndex) {this.current = e.currentIndex;}}, searchIcon: function searchIcon(e) {
 
     },
     getNearbyGroups: function getNearbyGroups() {
@@ -235,8 +236,8 @@ var _default = { components: {}, computed: (0, _vuex.mapState)(['forcedLogin', '
         uniCloud.callFunction({
           name: 'group-get-by-distance',
           data: {
-            "longitude": 113.297039,
-            "latitude": 23.091151,
+            "longitude": 113,
+            "latitude": 23,
             "radius": "100",
             "units": "km",
             "number": 100 } }).
@@ -253,12 +254,13 @@ var _default = { components: {}, computed: (0, _vuex.mapState)(['forcedLogin', '
 
       });
     },
-    getMyGroups: function getMyGroups() {
+    getPopularGroups: function getPopularGroups() {
       return new Promise(function (resolve, reject) {
         uniCloud.callFunction({
-          name: 'group-get-by-pageId',
+          name: 'groups-get-by-score',
           data: {
-            pageId: 1 } }).
+            maxNum: 20,
+            minNum: 0 } }).
 
 
         then(function (res) {
@@ -275,12 +277,14 @@ var _default = { components: {}, computed: (0, _vuex.mapState)(['forcedLogin', '
 
   onLoad: function onLoad() {var _this = this;
     console.log('Page onLoad' + this.openId);
+    var getPopularGroups = this.getPopularGroups().catch(function (e) {return e;});
+    var getNearbyGroups = this.getNearbyGroups().catch(function (e) {return e;});
 
-    Promise.all([this.getNearbyGroups(), this.getMyGroups()]).
+    Promise.all([getNearbyGroups, getPopularGroups]).
     then(function (value) {
       console.log("Group data: %s", JSON.stringify(value));
       _this.nearbyGroups = value[0];
-      _this.myGroups = value[1];
+      _this.popularGroups = value[1];
     }).
     catch(function (err) {
       console.log(err);
