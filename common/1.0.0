@@ -1,13 +1,13 @@
-<mxfile host="app.diagrams.net" modified="2020-06-01T01:45:21.135Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36" etag="Ht_KGKsSpDTwBThZe6dF" version="13.1.6" type="github">
+<mxfile host="app.diagrams.net" modified="2020-08-22T06:45:18.540Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36" etag="2QBhD6-MTr3n1GtSpsJJ" version="13.6.2" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="946" dy="614" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1426" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="e2kqeZe8ojtN32thENpT-102" value="Group" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=12;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="250" y="220" width="160" height="780" as="geometry" />
         </mxCell>
-        <mxCell id="e2kqeZe8ojtN32thENpT-103" value="name: String   &#xa;&#xa;description: String&#xa;&#xa;visibility: String&#xa;&#xa;joinMethod: String&#xa;&#xa;location: String&#xa;&#xa;imgUrl: String&#xa;&#xa;type: {&#xa;      id: UUID&#xa;      name: String&#xa;      topic: String&#xa;}&#xa;&#xa;region: String&#xa;&#xa;readCount: Long&#xa;&#xa;wechatGroup: {&#xa;     group_id,&#xa;     group_qrcode&#xa;}&#xa;&#xa;owner: [{&#xa;  user_id,&#xa;  gender,&#xa;  avatarUrl&#xa;}]&#xa;&#xa;admins: [{&#xa;  user_id,&#xa;  gender,&#xa;  avatarUrl&#xa;}]&#xa;&#xa;members: [{&#xa;  user_id,&#xa;  gender,&#xa;  avatarUrl&#xa;}],&#xa;&#xa;activities: [{&#xa;  activity_id,&#xa;  name,&#xa;  description,&#xa;  imgUrl,&#xa;  memberSize&#xa;}]" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="e2kqeZe8ojtN32thENpT-102" vertex="1">
+        <mxCell id="e2kqeZe8ojtN32thENpT-103" value="name: String   &#xa;&#xa;description: String&#xa;&#xa;visibility: String&#xa;&#xa;joinMethod: String&#xa;&#xa;location: String&#xa;&#xa;imgUrl: String&#xa;&#xa;qrCodeUrl: String&#xa;&#xa;type: {&#xa;      id: UUID&#xa;      name: String&#xa;      topic: String&#xa;}&#xa;&#xa;region: String&#xa;&#xa;readCount: Long&#xa;&#xa;wechatGroup: {&#xa;     group_id,&#xa;     group_qrcode&#xa;}&#xa;&#xa;owner: [{&#xa;  user_id,&#xa;  gender,&#xa;  avatarUrl&#xa;}]&#xa;&#xa;admins: [{&#xa;  user_id,&#xa;  gender,&#xa;  avatarUrl&#xa;}]&#xa;&#xa;members: [{&#xa;  user_id,&#xa;  gender,&#xa;  avatarUrl&#xa;}],&#xa;&#xa;activities: [{&#xa;  activity_id,&#xa;  name,&#xa;  description,&#xa;  imgUrl,&#xa;  memberSize&#xa;}]" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="e2kqeZe8ojtN32thENpT-102" vertex="1">
           <mxGeometry y="30" width="160" height="750" as="geometry" />
         </mxCell>
         <mxCell id="e2kqeZe8ojtN32thENpT-106" value="User" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
@@ -40,16 +40,16 @@
         <mxCell id="r2ZVLrDykZAbXcYJcu0e-1" value="_id: UUID&#xa;&#xa;createdAt: Date&#xa;&#xa;expiredAt: Date&#xa;&#xa;openId: String&#xa;&#xa;sessionKey:String" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="r2ZVLrDykZAbXcYJcu0e-0" vertex="1">
           <mxGeometry y="30" width="160" height="150" as="geometry" />
         </mxCell>
-        <mxCell id="zAt8kxatdwOUTqd7q5Hp-0" value="GroupTopic" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="zAt8kxatdwOUTqd7q5Hp-0" value="GroupTopic" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="430" y="740" width="160" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="zAt8kxatdwOUTqd7q5Hp-1" value="_id: UUID&#xa;&#xa;name: String&#xa;&#xa;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="zAt8kxatdwOUTqd7q5Hp-0">
+        <mxCell id="zAt8kxatdwOUTqd7q5Hp-1" value="_id: UUID&#xa;&#xa;name: String&#xa;&#xa;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="zAt8kxatdwOUTqd7q5Hp-0" vertex="1">
           <mxGeometry y="30" width="160" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="zAt8kxatdwOUTqd7q5Hp-2" value="GroupType" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="zAt8kxatdwOUTqd7q5Hp-2" value="GroupType" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="430" y="860" width="160" height="130" as="geometry" />
         </mxCell>
-        <mxCell id="zAt8kxatdwOUTqd7q5Hp-3" value="_id: UUID&#xa;&#xa;name: String&#xa;&#xa;groupTopicId: UUID&#xa;&#xa;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="zAt8kxatdwOUTqd7q5Hp-2">
+        <mxCell id="zAt8kxatdwOUTqd7q5Hp-3" value="_id: UUID&#xa;&#xa;name: String&#xa;&#xa;groupTopicId: UUID&#xa;&#xa;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="zAt8kxatdwOUTqd7q5Hp-2" vertex="1">
           <mxGeometry y="30" width="160" height="100" as="geometry" />
         </mxCell>
       </root>
