@@ -6,7 +6,7 @@
 		<view class="cu-bar bg-white search fixed" :style="[{top:CustomBar + 'px'}]">
 			<view class="search-form round">
 				<text class="cuIcon-search"></text>
-				<input type="text" placeholder="搜索group" confirm-type="search" @input="searchIcon"></input>
+				<input type="text" placeholder="搜索group" confirm-type="search" @click="searchIcon"></input>
 			</view>
 		</view>
 
@@ -90,7 +90,12 @@
 				}
 			},
 			searchIcon(e) {
-
+				uni.navigateTo({
+					url: '/pages/search/search',
+					animationType: 'pop-in',
+					animationDuration: 200
+				})
+				
 			},
 			getNearbyGroups() {
 				return new Promise((resolve, reject) => {
@@ -138,16 +143,21 @@
 		},
 		onLoad: function() {
 			console.log('Page onLoad' + this.openId);
+			uni.showLoading({
+				title: '加载中...'
+			})
 			let getPopularGroups = this.getPopularGroups().catch(e => e)
 			let getNearbyGroups = this.getNearbyGroups().catch(e => e)
 			
 			Promise.all([getNearbyGroups, getPopularGroups])
 				.then(value => {
+					uni.hideLoading()
 					console.log("Group data: %s", JSON.stringify(value))
 					this.nearbyGroups = value[0]
 					this.popularGroups = value[1]
 				})
 				.catch(err => {
+					uni.hideLoading()
 					console.log(err)
 				})
 		}

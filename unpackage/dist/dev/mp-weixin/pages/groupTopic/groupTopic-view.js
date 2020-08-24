@@ -128,7 +128,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var cuSwiper = function cuSwiper() {__webpack_require__.e(/*! require.ensure | colorui/components/cu-swiper */ "colorui/components/cu-swiper").then((function () {return resolve(__webpack_require__(/*! @/colorui/components/cu-swiper.vue */ 253));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var cuSwiper = function cuSwiper() {__webpack_require__.e(/*! require.ensure | colorui/components/cu-swiper */ "colorui/components/cu-swiper").then((function () {return resolve(__webpack_require__(/*! @/colorui/components/cu-swiper.vue */ 259));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 

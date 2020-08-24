@@ -48,6 +48,10 @@
             "path" : "pages/groupTopic/groupTopic-view",
             "style" : {}
         }
+        ,{
+            "path" : "pages/search/search",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationStyle":"custom", //取消系统导航栏

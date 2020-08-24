@@ -137,7 +137,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni, uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -229,6 +229,11 @@ var _vuex = __webpack_require__(/*! vuex */ 12); //
 //
 //
 var _default = { components: {}, computed: (0, _vuex.mapState)(['forcedLogin', 'hasLogin', 'userName', 'avatarUrl', 'gender', 'openId']), data: function data() {return { CustomBar: this.CustomBar, popularGroups: [], recommendedPeoples: [], recommendedGroups: [], nearbyGroups: [], background: ['color1', 'color2', 'color3'], indicatorDots: true, autoplay: true, interval: 2000, duration: 500, items: ['ALL', 'GOING', 'SAVED', 'PAST'], styles: [{ value: 'button', text: '按钮', checked: true }, { value: 'text', text: '文字' }], colors: ['#007aff', '#4cd964', '#dd524d'], current: 0, colorIndex: 0, activeColor: '#007aff', styleType: 'button' };}, methods: { onClickItem: function onClickItem(e) {if (this.current !== e.currentIndex) {this.current = e.currentIndex;}}, searchIcon: function searchIcon(e) {
+      uni.navigateTo({
+        url: '/pages/search/search',
+        animationType: 'pop-in',
+        animationDuration: 200 });
+
 
     },
     getNearbyGroups: function getNearbyGroups() {
@@ -277,20 +282,25 @@ var _default = { components: {}, computed: (0, _vuex.mapState)(['forcedLogin', '
 
   onLoad: function onLoad() {var _this = this;
     console.log('Page onLoad' + this.openId);
+    uni.showLoading({
+      title: '加载中...' });
+
     var getPopularGroups = this.getPopularGroups().catch(function (e) {return e;});
     var getNearbyGroups = this.getNearbyGroups().catch(function (e) {return e;});
 
     Promise.all([getNearbyGroups, getPopularGroups]).
     then(function (value) {
+      uni.hideLoading();
       console.log("Group data: %s", JSON.stringify(value));
       _this.nearbyGroups = value[0];
       _this.popularGroups = value[1];
     }).
     catch(function (err) {
+      uni.hideLoading();
       console.log(err);
     });
   } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 19)["default"]))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 19)["default"]))
 
 /***/ }),
 /* 19 */,

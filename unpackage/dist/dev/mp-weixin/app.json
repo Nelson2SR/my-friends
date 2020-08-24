@@ -10,7 +10,8 @@
     "test/uploadFile/uploadFile",
     "pages/profile/profile",
     "pages/post/post-create",
-    "pages/groupTopic/groupTopic-view"
+    "pages/groupTopic/groupTopic-view",
+    "pages/search/search"
   ],
   "subPackages": [],
   "window": {
