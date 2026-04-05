@@ -1,0 +1,48 @@
+
+.uni-margin-wrap {
+		width: 690rpx;
+		margin: 0 30rpx;
+}
+.swiper {
+		height: 300rpx;
+}
+.swiper-item {
+		display: block;
+		height: 300rpx;
+		line-height: 300rpx;
+		text-align: center;
+}
+.swiper-list {
+		margin-top: 40rpx;
+		margin-bottom: 0;
+}
+.uni-common-mt {
+		margin-top: 60rpx;
+		position: relative;
+}
+.info {
+		position: absolute;
+		right: 20rpx;
+}
+.uni-padding-wrap {
+		width: 550rpx;
+		padding: 0 100rpx;
+}
+
+	/* card */
+.footer-box {
+
+		display: flex;
+
+		justify-content: space-between;
+		flex-direction: row;
+}
+.footer-box__item {
+		align-items: center;
+		padding: 10rpx 0;
+		font-size: 30rpx;
+		color: #666;
+}
+page {
+		padding-top: 50px;
+}

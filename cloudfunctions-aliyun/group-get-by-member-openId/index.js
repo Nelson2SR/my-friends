@@ -1,12 +1,4 @@
-/**
- * function for retriving groups joined from other users
- * group info should come from database
- * @param {openId}
- */
 'use strict';
-const { RedisService } = require('utils')
-const redisService = new RedisService()
-
 const db = uniCloud.database()
 exports.main = async (event, context) => {
 	console.log('event:' + event)

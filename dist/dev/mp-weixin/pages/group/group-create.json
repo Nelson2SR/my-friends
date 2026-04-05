@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "Your new group",
+  "usingComponents": {
+    "cu-upload-file": "../../colorui/components/cu-upload-file"
+  }
+}

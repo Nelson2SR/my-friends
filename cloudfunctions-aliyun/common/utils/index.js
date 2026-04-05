@@ -1,6 +1,5 @@
 const base64Arraybuffer = require('base64-arraybuffer')
 const { GlobalSearch } = require("./algolia/global-search.js")
-const { RedisService } = require("./redis/redis-service.js")
 const { AbstractResponse } = require("./abstract-response/abstractResponse.js")
 
 function encodeBuffer( buffer ) {
@@ -20,6 +19,5 @@ module.exports = {
 	decodeString,
 	getVersion,
 	GlobalSearch,
-	RedisService,
 	AbstractResponse
 }

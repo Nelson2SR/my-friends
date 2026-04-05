@@ -1,0 +1,1 @@
+<view><view><progress percent="{{a}}" stroke-width="10"></progress></view><view><button type="primary" loading="{{b}}" disabled="{{c}}" bindtap="{{d}}">选择照片</button></view></view>
